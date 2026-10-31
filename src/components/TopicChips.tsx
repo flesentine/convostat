@@ -73,7 +73,7 @@ export function TopicChips({ topics, selected, onChange }: TopicChipsProps) {
         {selectedTopics.map((topic) => (
           <span
             key={topic.id}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-surface-2 py-1 pl-2 pr-1 text-xs font-medium text-ink"
+            className="inline-flex min-h-9 items-center gap-1.5 rounded-lg bg-surface-2 py-1 pl-2.5 pr-1 text-[13px] font-medium text-ink"
           >
             <span
               aria-hidden
@@ -87,10 +87,10 @@ export function TopicChips({ topics, selected, onChange }: TopicChipsProps) {
                 event.stopPropagation()
                 remove(topic.id)
               }}
-              className="rounded p-0.5 text-muted transition hover:bg-line hover:text-ink"
+              className="flex size-8 items-center justify-center rounded-md text-muted transition hover:bg-line hover:text-ink"
               aria-label={`Remove ${topic.name}`}
             >
-              <X size={12} />
+              <X size={14} />
             </button>
           </span>
         ))}
@@ -109,7 +109,7 @@ export function TopicChips({ topics, selected, onChange }: TopicChipsProps) {
             }
           }}
           placeholder={selected.length === 0 ? 'Add topics…' : ''}
-          className="min-w-[110px] flex-1 bg-transparent px-1.5 py-1 text-sm text-ink outline-none placeholder:text-muted"
+          className="min-w-[110px] flex-1 bg-transparent px-1.5 py-2 text-base text-ink outline-none placeholder:text-muted sm:text-sm"
           aria-label="Add topic"
         />
       </div>
@@ -122,7 +122,7 @@ export function TopicChips({ topics, selected, onChange }: TopicChipsProps) {
               type="button"
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => add(topic.id)}
-              className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-sm text-ink transition hover:bg-surface-2"
+              className="flex min-h-11 w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-sm text-ink transition hover:bg-surface-2"
             >
               <span
                 aria-hidden
@@ -137,7 +137,7 @@ export function TopicChips({ topics, selected, onChange }: TopicChipsProps) {
               type="button"
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => void create()}
-              className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-sm text-ink transition hover:bg-surface-2"
+              className="flex min-h-11 w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-sm text-ink transition hover:bg-surface-2"
             >
               <Plus size={14} className="text-muted" />
               Create “{query.trim()}”

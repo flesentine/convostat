@@ -80,6 +80,7 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -161,6 +162,33 @@
   outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
   outline-offset: 4px;
   border-radius: 999px;
+}
+
+/* iOS zooms any focused field below 16px. Keep fields readable and stable. */
+@media (max-width: 640px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* Bigger slider thumbs and hit areas for fingers. */
+@media (pointer: coarse) {
+  .rating-slider {
+    height: 30px;
+  }
+
+  .rating-slider::-webkit-slider-thumb {
+    width: 26px;
+    height: 26px;
+    margin-top: -10px;
+  }
+
+  .rating-slider::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

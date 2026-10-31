@@ -56,7 +56,7 @@ export default function App() {
         </div>
       </aside>
 
-      <header className="sticky top-0 z-20 border-b border-line bg-bg/85 backdrop-blur md:hidden">
+      <header className="sticky top-0 z-20 border-b border-line bg-bg/85 pt-[env(safe-area-inset-top)] backdrop-blur md:hidden">
         <div className="flex h-14 items-center justify-between px-4">
           <Logo compact />
           <span className="text-[11px] text-muted">Local-first</span>
@@ -64,7 +64,7 @@ export default function App() {
       </header>
 
       <main className="md:pl-60">
-        <div className="mx-auto w-full max-w-6xl px-4 pb-28 pt-6 sm:px-6 md:pb-14 md:pt-10">
+        <div className="mx-auto w-full max-w-6xl px-4 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-6 sm:px-6 md:pb-14 md:pt-10">
           <Routes>
             <Route path="/" element={<Capture />} />
             <Route path="/people" element={<People />} />
@@ -86,7 +86,7 @@ export default function App() {
                 end={item.end}
                 className={({ isActive }) =>
                   cn(
-                    'flex flex-col items-center gap-1 py-2.5 text-[10px] font-medium transition',
+                    'flex flex-col items-center gap-1 py-3 text-[11px] font-medium transition',
                     isActive ? 'text-accent' : 'text-muted hover:text-ink',
                   )
                 }

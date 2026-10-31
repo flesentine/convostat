@@ -183,7 +183,7 @@ export function QuadrantPad({
         x={OFFSET + 8}
         y={OFFSET + 13}
         textAnchor="start"
-        className="fill-[var(--muted)] text-[8.5px] font-medium uppercase tracking-[0.12em]"
+        className="fill-[var(--muted)] text-[9.5px] font-medium uppercase tracking-[0.12em]"
       >
         Caring
       </text>
@@ -191,7 +191,7 @@ export function QuadrantPad({
         x={OFFSET + PLOT - 8}
         y={OFFSET + 13}
         textAnchor="end"
-        className="fill-[var(--muted)] text-[8.5px] font-medium uppercase tracking-[0.12em]"
+        className="fill-[var(--muted)] text-[9.5px] font-medium uppercase tracking-[0.12em]"
       >
         Warm
       </text>
@@ -199,7 +199,7 @@ export function QuadrantPad({
         x={OFFSET + 8}
         y={OFFSET + PLOT - 9}
         textAnchor="start"
-        className="fill-[var(--muted)] text-[8.5px] font-medium uppercase tracking-[0.12em]"
+        className="fill-[var(--muted)] text-[9.5px] font-medium uppercase tracking-[0.12em]"
       >
         Hostile
       </text>
@@ -207,7 +207,7 @@ export function QuadrantPad({
         x={OFFSET + PLOT - 8}
         y={OFFSET + PLOT - 9}
         textAnchor="end"
-        className="fill-[var(--muted)] text-[8.5px] font-medium uppercase tracking-[0.12em]"
+        className="fill-[var(--muted)] text-[9.5px] font-medium uppercase tracking-[0.12em]"
       >
         Backhanded
       </text>
@@ -216,7 +216,7 @@ export function QuadrantPad({
         x={SIZE / 2}
         y={14}
         textAnchor="middle"
-        className="fill-[var(--muted)] text-[7.5px] tracking-[0.16em]"
+        className="fill-[var(--muted)] text-[8px] tracking-[0.16em]"
       >
         KIND
       </text>
@@ -224,7 +224,7 @@ export function QuadrantPad({
         x={SIZE / 2}
         y={SIZE - 4}
         textAnchor="middle"
-        className="fill-[var(--muted)] text-[7.5px] tracking-[0.16em]"
+        className="fill-[var(--muted)] text-[8px] tracking-[0.16em]"
       >
         HARSH
       </text>
@@ -233,7 +233,7 @@ export function QuadrantPad({
         y={SIZE / 2}
         textAnchor="middle"
         transform={`rotate(-90 10 ${SIZE / 2})`}
-        className="fill-[var(--muted)] text-[7.5px] tracking-[0.16em]"
+        className="fill-[var(--muted)] text-[8px] tracking-[0.16em]"
       >
         NEGATIVE
       </text>
@@ -242,7 +242,7 @@ export function QuadrantPad({
         y={SIZE / 2}
         textAnchor="middle"
         transform={`rotate(90 ${SIZE - 10} ${SIZE / 2})`}
-        className="fill-[var(--muted)] text-[7.5px] tracking-[0.16em]"
+        className="fill-[var(--muted)] text-[8px] tracking-[0.16em]"
       >
         POSITIVE
       </text>

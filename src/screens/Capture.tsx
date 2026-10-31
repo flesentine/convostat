@@ -165,7 +165,7 @@ export function Capture() {
       <Card className="p-5 sm:p-6">
         <div>
           <SectionLabel>Who said it</SectionLabel>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
             {recentPersons.map((person) => {
               const selected = person.id === personId
               return (
@@ -174,7 +174,7 @@ export function Capture() {
                   type="button"
                   onClick={() => setPersonId(person.id)}
                   className={cn(
-                    'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-medium transition',
+                    'inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-[13px] font-medium transition',
                     selected
                       ? 'border-accent bg-accent-soft text-accent'
                       : 'border-line-strong text-ink-soft hover:bg-surface-2',
@@ -192,7 +192,7 @@ export function Capture() {
             <button
               type="button"
               onClick={() => setAddOpen(true)}
-              className="inline-flex items-center gap-1 rounded-full border border-dashed border-line-strong px-3 py-1.5 text-[13px] font-medium text-muted transition hover:border-accent/50 hover:text-accent"
+              className="inline-flex min-h-10 shrink-0 items-center gap-1 rounded-full border border-dashed border-line-strong px-3.5 py-2 text-[13px] font-medium text-muted transition hover:border-accent/50 hover:text-accent"
             >
               <Plus size={13} />
               Add
@@ -213,7 +213,7 @@ export function Capture() {
             }}
             rows={3}
             placeholder="Paste the gist of it — or leave this blank if you just want to rate the feeling."
-            className="w-full resize-none rounded-xl border border-line-strong bg-surface px-3.5 py-3 text-sm leading-relaxed text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20"
+            className="w-full resize-none rounded-xl border border-line-strong bg-surface px-3.5 py-3 text-base leading-relaxed text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20 sm:text-sm"
           />
         </div>
 
@@ -223,7 +223,7 @@ export function Capture() {
         </div>
 
         <div className="mt-7 grid gap-7 md:grid-cols-[minmax(0,1fr)_230px]">
-          <div className="order-2 space-y-7 md:order-1">
+          <div className="order-1 space-y-7">
             <RatingSlider
               label="Content"
               hint="what was said"
@@ -242,8 +242,8 @@ export function Capture() {
             />
           </div>
 
-          <div className="order-1 md:order-2">
-            <div className="mx-auto w-full max-w-[230px]">
+          <div className="order-2">
+            <div className="mx-auto w-full max-w-[250px] md:max-w-[230px]">
               <QuadrantPad
                 content={content}
                 delivery={delivery}
@@ -268,7 +268,7 @@ export function Capture() {
           <button
             type="button"
             onClick={() => setShowDetail((value) => !value)}
-            className="flex items-center gap-1.5 text-xs font-medium text-muted transition hover:text-ink"
+            className="flex min-h-10 items-center gap-1.5 py-2 text-xs font-medium text-muted transition hover:text-ink"
             aria-expanded={showDetail}
           >
             <ChevronDown
@@ -290,7 +290,7 @@ export function Capture() {
                       onClick={() => setIntensity(value)}
                       aria-pressed={intensity === value}
                       className={cn(
-                        'size-9 rounded-lg border text-xs font-semibold transition',
+                        'size-10 rounded-lg border text-xs font-semibold transition',
                         intensity === value
                           ? 'border-accent bg-accent-soft text-accent'
                           : 'border-line-strong text-muted hover:bg-surface-2',
@@ -316,7 +316,7 @@ export function Capture() {
                       }
                       aria-pressed={effect === option.value}
                       className={cn(
-                        'rounded-lg border px-3 py-2 text-xs font-medium transition',
+                        'min-h-10 rounded-lg border px-3.5 py-2.5 text-xs font-medium transition',
                         effect === option.value
                           ? option.className
                           : 'border-line-strong text-muted hover:bg-surface-2',
@@ -334,7 +334,7 @@ export function Capture() {
                   value={note}
                   onChange={(event) => setNote(event.target.value)}
                   placeholder="Anything you want to remember about the moment."
-                  className="h-10 w-full rounded-xl border border-line-strong bg-surface px-3 text-sm text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20"
+                  className="h-11 w-full rounded-xl border border-line-strong bg-surface px-3 text-base text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20 sm:text-sm"
                 />
               </label>
             </div>
@@ -342,7 +342,7 @@ export function Capture() {
         </div>
 
         <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="flex items-center gap-1.5 text-[11px] text-muted">
+          <p className="hidden items-center gap-1.5 text-[11px] text-muted sm:flex">
             <CornerDownLeft size={12} />
             <kbd className="rounded border border-line bg-surface-2 px-1 py-0.5 font-sans text-[10px]">
               ⌘

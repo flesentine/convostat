@@ -159,7 +159,7 @@ export function Settings() {
                 onClick={() => setTheme(option.value)}
                 aria-pressed={theme === option.value}
                 className={cn(
-                  'inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition',
+                  'inline-flex min-h-10 items-center gap-1.5 rounded-lg border px-3.5 py-2.5 text-xs font-medium transition',
                   theme === option.value
                     ? 'border-accent bg-accent-soft text-accent'
                     : 'border-line-strong text-muted hover:bg-surface-2 hover:text-ink',
@@ -383,7 +383,7 @@ function TopicManager({
             {topics.map((topic) => (
               <li
                 key={topic.id}
-                className="flex items-center gap-2 px-3 py-2"
+                className="flex items-center gap-1 px-2 py-1.5"
               >
                 <span
                   className="size-2 shrink-0 rounded-full"
@@ -399,35 +399,35 @@ function TopicManager({
                       if (event.key === 'Enter') void saveEdit(topic)
                       if (event.key === 'Escape') setEditingId(null)
                     }}
-                    className="h-8 min-w-0 flex-1 rounded-lg border border-line-strong bg-surface px-2 text-xs text-ink outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20"
+                    className="h-10 min-w-0 flex-1 rounded-lg border border-line-strong bg-surface px-2.5 text-base text-ink outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 sm:text-xs"
                   />
                 ) : (
                   <button
                     type="button"
                     onClick={() => startEdit(topic)}
-                    className="min-w-0 flex-1 truncate text-left text-xs font-medium text-ink"
+                    className="min-h-10 min-w-0 flex-1 truncate text-left text-[13px] font-medium text-ink"
                   >
                     {topic.name}
                   </button>
                 )}
-                <span className="text-[10px] tabular-nums text-muted">
+                <span className="text-[11px] tabular-nums text-muted">
                   {counts.get(topic.id) ?? 0}
                 </span>
                 <button
                   type="button"
                   onClick={() => startEdit(topic)}
-                  className="rounded p-1.5 text-muted transition hover:bg-surface-2 hover:text-ink"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-surface-2 hover:text-ink sm:size-8"
                   aria-label={`Rename ${topic.name}`}
                 >
-                  <Pencil size={13} />
+                  <Pencil size={15} />
                 </button>
                 <button
                   type="button"
                   onClick={() => void remove(topic)}
-                  className="rounded p-1.5 text-muted transition hover:bg-hostile/10 hover:text-hostile"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-hostile/10 hover:text-hostile sm:size-8"
                   aria-label={`Delete ${topic.name}`}
                 >
-                  <Trash2 size={13} />
+                  <Trash2 size={15} />
                 </button>
               </li>
             ))}
@@ -442,7 +442,7 @@ function TopicManager({
               if (event.key === 'Enter') void add()
             }}
             placeholder="New topic"
-            className="h-9 min-w-0 flex-1 rounded-xl border border-line-strong bg-surface px-3 text-xs text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20"
+            className="h-11 min-w-0 flex-1 rounded-xl border border-line-strong bg-surface px-3 text-base text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20 sm:text-xs"
           />
           <Button variant="secondary" size="sm" onClick={() => void add()} disabled={!newName.trim()}>
             <Plus size={14} />

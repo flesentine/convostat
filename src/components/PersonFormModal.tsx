@@ -105,7 +105,7 @@ export function PersonFormModal({
               if (event.key === 'Enter') void save()
             }}
             placeholder="e.g. Maya Chen"
-            className="h-11 w-full rounded-xl border border-line-strong bg-surface px-3 text-sm text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20"
+            className="h-11 w-full rounded-xl border border-line-strong bg-surface px-3 text-base text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20 sm:text-sm"
           />
         </label>
 
@@ -120,7 +120,7 @@ export function PersonFormModal({
                 type="button"
                 onClick={() => setRelationship(option)}
                 className={cn(
-                  'rounded-lg border px-3 py-1.5 text-xs font-medium transition',
+                  'min-h-10 rounded-lg border px-3.5 py-2 text-xs font-medium transition',
                   relationship === option
                     ? 'border-accent bg-accent-soft text-accent'
                     : 'border-line-strong text-ink-soft hover:bg-surface-2',
@@ -145,7 +145,7 @@ export function PersonFormModal({
                 aria-label={`Use color ${option}`}
                 aria-pressed={color === option}
                 className={cn(
-                  'size-7 rounded-full border-2 transition',
+                  'size-9 rounded-full border-2 transition sm:size-7',
                   color === option ? 'border-ink' : 'border-transparent',
                 )}
                 style={{ background: option }}

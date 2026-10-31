@@ -59,7 +59,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         x={PAD + 9}
         y={PAD + 15}
         textAnchor="start"
-        className="fill-[var(--muted)] text-[9px] font-medium uppercase tracking-[0.12em]"
+        className="fill-[var(--muted)] text-[10px] font-medium uppercase tracking-[0.12em]"
       >
         Caring
       </text>
@@ -67,7 +67,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         x={PAD + PLOT - 9}
         y={PAD + 15}
         textAnchor="end"
-        className="fill-[var(--muted)] text-[9px] font-medium uppercase tracking-[0.12em]"
+        className="fill-[var(--muted)] text-[10px] font-medium uppercase tracking-[0.12em]"
       >
         Warm
       </text>
@@ -75,7 +75,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         x={PAD + 9}
         y={PAD + PLOT - 10}
         textAnchor="start"
-        className="fill-[var(--muted)] text-[9px] font-medium uppercase tracking-[0.12em]"
+        className="fill-[var(--muted)] text-[10px] font-medium uppercase tracking-[0.12em]"
       >
         Hostile
       </text>
@@ -83,7 +83,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         x={PAD + PLOT - 9}
         y={PAD + PLOT - 10}
         textAnchor="end"
-        className="fill-[var(--muted)] text-[9px] font-medium uppercase tracking-[0.12em]"
+        className="fill-[var(--muted)] text-[10px] font-medium uppercase tracking-[0.12em]"
       >
         Backhanded
       </text>
@@ -115,7 +115,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         x={SIZE / 2}
         y={15}
         textAnchor="middle"
-        className="fill-[var(--muted)] text-[8px] tracking-[0.16em]"
+        className="fill-[var(--muted)] text-[9px] tracking-[0.16em]"
       >
         KIND
       </text>
@@ -123,7 +123,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         x={SIZE / 2}
         y={SIZE - 5}
         textAnchor="middle"
-        className="fill-[var(--muted)] text-[8px] tracking-[0.16em]"
+        className="fill-[var(--muted)] text-[9px] tracking-[0.16em]"
       >
         HARSH
       </text>
@@ -132,7 +132,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         y={SIZE / 2}
         textAnchor="middle"
         transform={`rotate(-90 11 ${SIZE / 2})`}
-        className="fill-[var(--muted)] text-[8px] tracking-[0.16em]"
+        className="fill-[var(--muted)] text-[9px] tracking-[0.16em]"
       >
         NEGATIVE
       </text>
@@ -141,7 +141,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         y={SIZE / 2}
         textAnchor="middle"
         transform={`rotate(90 ${SIZE - 11} ${SIZE / 2})`}
-        className="fill-[var(--muted)] text-[8px] tracking-[0.16em]"
+        className="fill-[var(--muted)] text-[9px] tracking-[0.16em]"
       >
         POSITIVE
       </text>

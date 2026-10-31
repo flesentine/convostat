@@ -113,7 +113,7 @@ export function PersonDetail() {
     <div className="mx-auto max-w-5xl">
       <Link
         to="/people"
-        className="inline-flex items-center gap-1.5 text-xs font-medium text-muted transition hover:text-ink"
+        className="inline-flex min-h-10 items-center gap-1.5 py-2 text-xs font-medium text-muted transition hover:text-ink"
       >
         <ArrowLeft size={13} />
         All people
@@ -150,7 +150,7 @@ export function PersonDetail() {
               type="button"
               onClick={() => setRange(option.value)}
               className={cn(
-                'rounded-[10px] px-3 py-1.5 text-xs font-medium transition',
+                'min-h-10 rounded-[10px] px-3.5 py-2 text-xs font-medium transition',
                 range === option.value
                   ? 'bg-accent-soft text-accent'
                   : 'text-muted hover:text-ink',
@@ -162,7 +162,7 @@ export function PersonDetail() {
         </div>
         <Link
           to={`/?person=${person.id}`}
-          className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-accent px-3 text-[13px] font-medium text-accent-ink transition hover:brightness-105"
+          className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-accent px-3.5 text-[13px] font-medium text-accent-ink transition hover:brightness-105"
         >
           <MessageSquarePlus size={14} />
           Log a comment
@@ -382,69 +382,103 @@ export function PersonDetail() {
                 Add topics when you log comments to see this breakdown.
               </p>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[440px] text-left text-xs">
-                  <thead className="border-y border-line text-[10px] uppercase tracking-[0.12em] text-muted">
-                    <tr>
-                      <th className="px-3 py-2 font-semibold sm:px-5">Topic</th>
-                      <th className="px-2.5 py-2 font-semibold sm:px-3">Comments</th>
-                      <th className="px-2.5 py-2 font-semibold sm:px-3">Content</th>
-                      <th className="px-2.5 py-2 font-semibold sm:px-3">Delivery</th>
-                      <th className="px-2.5 py-2 font-semibold sm:px-3">Skew</th>
-                      <th className="hidden px-5 py-2 text-right font-semibold sm:table-cell">
-                        Last
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {topicRows.map((row) => (
-                      <tr
-                        key={row.topic.id}
-                        className="border-b border-line last:border-0"
-                      >
-                        <td className="px-3 py-2.5 sm:px-5">
-                          <span className="flex items-center gap-1.5 font-medium text-ink">
-                            <span
-                              className="size-2 rounded-full"
-                              style={{ background: row.topic.color }}
-                            />
+              <>
+                <ul className="divide-y divide-line border-t border-line sm:hidden">
+                  {topicRows.map((row) => (
+                    <li key={row.topic.id} className="flex gap-3 px-4 py-3">
+                      <span
+                        className="mt-1.5 size-2.5 shrink-0 rounded-full"
+                        style={{ background: row.topic.color }}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="truncate text-sm font-medium text-ink">
                             {row.topic.name}
-                          </span>
-                        </td>
-                        <td className="px-2.5 py-2.5 tabular-nums text-muted sm:px-3">
-                          {row.count}
-                        </td>
-                        <td
-                          className={cn(
-                            'px-2.5 py-2.5 font-medium tabular-nums sm:px-3',
-                            signTone(row.avgContent),
-                          )}
-                        >
-                          {formatSigned(row.avgContent)}
-                        </td>
-                        <td
-                          className={cn(
-                            'px-2.5 py-2.5 font-medium tabular-nums sm:px-3',
-                            signTone(row.avgDelivery),
-                          )}
-                        >
-                          {formatSigned(row.avgDelivery)}
-                        </td>
-                        <td className="px-2.5 py-2.5 sm:px-3">
+                          </p>
                           {row.dominant ? (
                             <QuadrantBadge quadrant={row.dominant} size="sm" />
-                          ) : (
-                            <span className="text-muted">—</span>
-                          )}
-                        </td>
-                        <td className="hidden px-5 py-2.5 text-right text-[11px] text-muted sm:table-cell">
-                          {relativeDay(row.lastAt)}
-                        </td>
+                          ) : null}
+                        </div>
+                        <p className="mt-1 text-xs text-muted">
+                          {row.count} {row.count === 1 ? 'comment' : 'comments'} · Content{' '}
+                          <span className={signTone(row.avgContent)}>
+                            {formatSigned(row.avgContent)}
+                          </span>{' '}
+                          · Delivery{' '}
+                          <span className={signTone(row.avgDelivery)}>
+                            {formatSigned(row.avgDelivery)}
+                          </span>
+                        </p>
+                        <p className="mt-0.5 text-[11px] text-muted">
+                          Last {relativeDay(row.lastAt)}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="hidden overflow-x-auto sm:block">
+                  <table className="w-full min-w-[520px] text-left text-xs">
+                    <thead className="border-y border-line text-[10px] uppercase tracking-[0.12em] text-muted">
+                      <tr>
+                        <th className="px-5 py-2 font-semibold">Topic</th>
+                        <th className="px-3 py-2 font-semibold">Comments</th>
+                        <th className="px-3 py-2 font-semibold">Content</th>
+                        <th className="px-3 py-2 font-semibold">Delivery</th>
+                        <th className="px-3 py-2 font-semibold">Skew</th>
+                        <th className="px-5 py-2 text-right font-semibold">Last</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {topicRows.map((row) => (
+                        <tr
+                          key={row.topic.id}
+                          className="border-b border-line last:border-0"
+                        >
+                          <td className="px-5 py-2.5">
+                            <span className="flex items-center gap-1.5 font-medium text-ink">
+                              <span
+                                className="size-2 rounded-full"
+                                style={{ background: row.topic.color }}
+                              />
+                              {row.topic.name}
+                            </span>
+                          </td>
+                          <td className="px-3 py-2.5 tabular-nums text-muted">
+                            {row.count}
+                          </td>
+                          <td
+                            className={cn(
+                              'px-3 py-2.5 font-medium tabular-nums',
+                              signTone(row.avgContent),
+                            )}
+                          >
+                            {formatSigned(row.avgContent)}
+                          </td>
+                          <td
+                            className={cn(
+                              'px-3 py-2.5 font-medium tabular-nums',
+                              signTone(row.avgDelivery),
+                            )}
+                          >
+                            {formatSigned(row.avgDelivery)}
+                          </td>
+                          <td className="px-3 py-2.5">
+                            {row.dominant ? (
+                              <QuadrantBadge quadrant={row.dominant} size="sm" />
+                            ) : (
+                              <span className="text-muted">—</span>
+                            )}
+                          </td>
+                          <td className="px-5 py-2.5 text-right text-[11px] text-muted">
+                            {relativeDay(row.lastAt)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
             )}
           </Card>
 
@@ -511,7 +545,7 @@ export function PersonDetail() {
                     <button
                       type="button"
                       onClick={() => void deleteComment(comment)}
-                      className="h-8 shrink-0 rounded-lg p-1.5 text-muted transition hover:bg-hostile/10 hover:text-hostile"
+                      className="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-hostile/10 hover:text-hostile"
                       aria-label="Delete comment"
                     >
                       <Trash2 size={15} />
@@ -525,7 +559,7 @@ export function PersonDetail() {
                 <button
                   type="button"
                   onClick={() => setShowAll((value) => !value)}
-                  className="text-xs font-medium text-accent hover:underline"
+                  className="min-h-10 px-3 py-2 text-xs font-medium text-accent hover:underline"
                 >
                   {showAll ? 'Show fewer' : `Show all ${comments.length}`}
                 </button>
@@ -558,7 +592,7 @@ function Stat({
 }) {
   return (
     <Card className="px-4 py-3">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
         {label}
       </p>
       <p
@@ -569,7 +603,7 @@ function Stat({
       >
         {value}
       </p>
-      {hint ? <p className="text-[10px] text-muted">{hint}</p> : null}
+      {hint ? <p className="text-[11px] text-muted">{hint}</p> : null}
     </Card>
   )
 }
@@ -621,7 +655,7 @@ function SelectedComment({
       <button
         type="button"
         onClick={onDelete}
-        className="h-8 shrink-0 rounded-lg p-1.5 text-muted transition hover:bg-hostile/10 hover:text-hostile"
+        className="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-hostile/10 hover:text-hostile"
         aria-label="Delete comment"
       >
         <Trash2 size={15} />

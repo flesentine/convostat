@@ -51,8 +51,8 @@ export function Modal({
         aria-modal="true"
         aria-label={title}
         className={cn(
-          'relative z-10 w-full rounded-t-3xl border border-line bg-surface p-5 shadow-2xl sm:rounded-2xl',
-          'max-h-[90vh] overflow-y-auto',
+          'relative z-10 w-full rounded-t-3xl border border-line bg-surface p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-2xl sm:pb-5',
+          'max-h-[min(90dvh,46rem)] overflow-y-auto overscroll-contain',
           width,
         )}
       >
@@ -66,14 +66,16 @@ export function Modal({
           <button
             type="button"
             onClick={onClose}
-            className="-mr-1 -mt-1 rounded-lg p-2 text-muted transition hover:bg-surface-2 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+            className="-mr-1 -mt-1 flex size-10 items-center justify-center rounded-lg text-muted transition hover:bg-surface-2 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
             aria-label="Close"
           >
             <X size={18} />
           </button>
         </div>
         <div className="mt-5">{children}</div>
-        {footer ? <div className="mt-6 flex justify-end gap-2">{footer}</div> : null}
+        {footer ? (
+          <div className="mt-6 flex flex-wrap justify-end gap-2">{footer}</div>
+        ) : null}
       </div>
     </div>,
     document.body,

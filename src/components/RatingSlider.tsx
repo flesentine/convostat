@@ -33,7 +33,7 @@ export function RatingSlider({
           <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
             {label}
           </span>
-          {hint ? <span className="text-[11px] text-muted">{hint}</span> : null}
+          {hint ? <span className="text-xs text-muted sm:text-[11px]">{hint}</span> : null}
         </div>
         <span className="text-sm font-semibold" style={{ color }}>
           {labels[value + 2]}
@@ -58,7 +58,7 @@ export function RatingSlider({
           <span
             key={entry}
             className={cn(
-              'text-center text-[10px] leading-tight',
+              'text-center text-[11px] leading-tight sm:text-[10px]',
               index === value + 2 ? 'font-semibold text-ink' : 'text-muted',
             )}
           >

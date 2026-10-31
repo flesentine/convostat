@@ -79,7 +79,7 @@ export function People() {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search people or relationships"
-            className="h-10 w-full rounded-xl border border-line-strong bg-surface pl-9 pr-3 text-sm text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20"
+            className="h-11 w-full rounded-xl border border-line-strong bg-surface pl-9 pr-3 text-base text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20 sm:text-sm"
           />
         </div>
       ) : null}

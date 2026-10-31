@@ -65,7 +65,7 @@ export function TrendChart({ comments }: TrendChartProps) {
             x={PAD_LEFT - 8}
             y={yFor(tick) + 3}
             textAnchor="end"
-            className="fill-[var(--muted)] text-[9px]"
+            className="fill-[var(--muted)] text-[20px] font-medium sm:text-[12px]"
           >
             {tick > 0 ? `+${tick}` : tick}
           </text>
@@ -113,7 +113,7 @@ export function TrendChart({ comments }: TrendChartProps) {
       <text
         x={PAD_LEFT}
         y={HEIGHT - 8}
-        className="fill-[var(--muted)] text-[9px]"
+        className="fill-[var(--muted)] text-[20px] font-medium sm:text-[12px]"
       >
         {formatDayShort(minAt)}
       </text>
@@ -121,7 +121,7 @@ export function TrendChart({ comments }: TrendChartProps) {
         x={WIDTH - PAD_RIGHT}
         y={HEIGHT - 8}
         textAnchor="end"
-        className="fill-[var(--muted)] text-[9px]"
+        className="fill-[var(--muted)] text-[20px] font-medium sm:text-[12px]"
       >
         {formatDayShort(maxAt)}
       </text>

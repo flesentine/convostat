@@ -32,6 +32,28 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
     { key: 'backhanded' as const, x: PAD + HALF, y: PAD + HALF },
   ]
 
+  const cornerLabels = [
+    { key: 'honest' as const, x: PAD, y: PAD - 6, anchor: 'start' as const },
+    {
+      key: 'warm' as const,
+      x: PAD + PLOT,
+      y: PAD - 6,
+      anchor: 'end' as const,
+    },
+    {
+      key: 'hostile' as const,
+      x: PAD,
+      y: PAD + PLOT + 16,
+      anchor: 'start' as const,
+    },
+    {
+      key: 'backhanded' as const,
+      x: PAD + PLOT,
+      y: PAD + PLOT + 16,
+      anchor: 'end' as const,
+    },
+  ]
+
   return (
     <svg
       viewBox={`0 0 ${SIZE} ${SIZE}`}
@@ -63,38 +85,17 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         />
       ))}
 
-      <text
-        x={PAD + 9}
-        y={PAD + 15}
-        textAnchor="start"
-        className="fill-[var(--muted)] text-[10px] font-medium uppercase tracking-[0.12em]"
-      >
-        Caring
-      </text>
-      <text
-        x={PAD + PLOT - 9}
-        y={PAD + 15}
-        textAnchor="end"
-        className="fill-[var(--muted)] text-[10px] font-medium uppercase tracking-[0.12em]"
-      >
-        Warm
-      </text>
-      <text
-        x={PAD + 9}
-        y={PAD + PLOT - 10}
-        textAnchor="start"
-        className="fill-[var(--muted)] text-[10px] font-medium uppercase tracking-[0.12em]"
-      >
-        Hostile
-      </text>
-      <text
-        x={PAD + PLOT - 9}
-        y={PAD + PLOT - 10}
-        textAnchor="end"
-        className="fill-[var(--muted)] text-[10px] font-medium uppercase tracking-[0.12em]"
-      >
-        Backhanded
-      </text>
+      {cornerLabels.map((label) => (
+        <text
+          key={label.key}
+          x={label.x}
+          y={label.y}
+          textAnchor={label.anchor}
+          className="fill-[var(--muted)] text-[10px] font-medium uppercase tracking-[0.12em]"
+        >
+          {QUADRANTS[label.key].short}
+        </text>
+      ))}
 
       {[-50, 0, 50].map((tick) => (
         <g key={tick}>

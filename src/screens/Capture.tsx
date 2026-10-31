@@ -210,54 +210,59 @@ export function Capture() {
           </div>
         </div>
 
-        <div className="mt-5">
-          <SectionLabel>How did it land?</SectionLabel>
-          <div className="mx-auto w-full max-w-[270px] sm:max-w-[320px]">
-            <QuadrantPad
-              content={content}
-              delivery={delivery}
-              onChange={(nextContent, nextDelivery) => {
-                setContent(nextContent)
-                setDelivery(nextDelivery)
-              }}
-            />
-            <div className="mt-3 text-center">
+        <div className="mt-5 lg:flex lg:items-center lg:gap-8">
+          <div className="lg:w-[340px] lg:shrink-0">
+            <SectionLabel>Where does it land?</SectionLabel>
+            <div className="mx-auto w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[340px]">
+              <QuadrantPad
+                content={content}
+                delivery={delivery}
+                onChange={(nextContent, nextDelivery) => {
+                  setContent(nextContent)
+                  setDelivery(nextDelivery)
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="lg:min-w-0 lg:flex-1">
+            <div className="mt-2 text-center lg:mt-0 lg:text-left">
               <p className="text-base font-semibold" style={{ color: meta.color }}>
                 {meta.label}
               </p>
-              <p className="mt-1 text-sm font-medium tabular-nums text-muted">
+              <p className="mt-0.5 text-sm font-medium tabular-nums text-muted">
                 Content {formatSigned(content, 0)} · Delivery{' '}
                 {formatSigned(delivery, 0)}
               </p>
-              <p className="mt-1 hidden text-[11px] leading-snug text-muted sm:block">
+              <p className="mt-0.5 text-[10px] leading-tight text-muted">
                 {meta.description}
               </p>
             </div>
-          </div>
-        </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-          <button
-            type="button"
-            onClick={() => setShowSliders((value) => !value)}
-            className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line-strong px-3.5 text-xs font-medium text-muted transition hover:bg-surface-2 hover:text-ink"
-            aria-expanded={showSliders}
-          >
-            <SlidersHorizontal size={14} />
-            {showSliders ? 'Hide sliders' : 'Fine-tune'}
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowContext((value) => !value)}
-            className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line-strong px-3.5 text-xs font-medium text-muted transition hover:bg-surface-2 hover:text-ink"
-            aria-expanded={showContext}
-          >
-            <ChevronDown
-              size={14}
-              className={cn('transition-transform', showContext && 'rotate-180')}
-            />
-            {showContext ? 'Hide context' : 'Add context'}
-          </button>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+              <button
+                type="button"
+                onClick={() => setShowSliders((value) => !value)}
+                className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line-strong px-3.5 text-xs font-medium text-muted transition hover:bg-surface-2 hover:text-ink"
+                aria-expanded={showSliders}
+              >
+                <SlidersHorizontal size={14} />
+                {showSliders ? 'Hide sliders' : 'Fine-tune'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowContext((value) => !value)}
+                className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line-strong px-3.5 text-xs font-medium text-muted transition hover:bg-surface-2 hover:text-ink"
+                aria-expanded={showContext}
+              >
+                <ChevronDown
+                  size={14}
+                  className={cn('transition-transform', showContext && 'rotate-180')}
+                />
+                {showContext ? 'Hide context' : 'Add context'}
+              </button>
+            </div>
+          </div>
         </div>
 
         {showSliders ? (
@@ -409,7 +414,7 @@ export function Capture() {
 
 function PageHeading() {
   return (
-    <div className="mb-5">
+    <div className="mb-4">
       <h1 className="text-2xl font-semibold tracking-[-0.02em] text-ink">
         Log a comment
       </h1>

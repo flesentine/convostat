@@ -57,14 +57,14 @@ export default function App() {
       </aside>
 
       <header className="sticky top-0 z-20 border-b border-line bg-bg/85 pt-[env(safe-area-inset-top)] backdrop-blur md:hidden">
-        <div className="flex h-14 items-center justify-between px-4">
+        <div className="flex h-12 items-center justify-between px-4">
           <Logo compact />
           <span className="text-[11px] text-muted">Local-first</span>
         </div>
       </header>
 
       <main className="md:pl-60">
-        <div className="mx-auto w-full max-w-6xl px-4 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-6 sm:px-6 md:pb-14 md:pt-10">
+        <div className="mx-auto w-full max-w-6xl px-4 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-4 sm:px-6 md:pb-14 md:pt-10">
           <Routes>
             <Route path="/" element={<Capture />} />
             <Route path="/people" element={<People />} />

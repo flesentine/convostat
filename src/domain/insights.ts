@@ -35,11 +35,11 @@ export function buildPersonInsight(
   let headline: string
   if (stats.count >= 3 && topShare >= 0.5) {
     headline = `Mostly ${quadrantPhrase(stats.dominant)}.`
-  } else if (avgDelivery >= 0.75) {
+  } else if (avgDelivery >= 25) {
     headline = 'Consistently kind delivery.'
-  } else if (avgDelivery <= -0.75) {
+  } else if (avgDelivery <= -25) {
     headline = 'Consistently harsh delivery.'
-  } else if (avgContent >= 0.75) {
+  } else if (avgContent >= 25) {
     headline = 'Mostly positive content.'
   } else {
     headline = 'Mixed signals so far.'
@@ -47,18 +47,18 @@ export function buildPersonInsight(
 
   const notes: string[] = []
 
-  if (avgContent < -0.3 && avgDelivery > 0.3) {
+  if (avgContent < -15 && avgDelivery > 15) {
     notes.push(
-      'Hard topics tend to arrive gently — the pattern of honest, caring feedback.',
+      'Hard topics tend to arrive gently — the pattern of constructive feedback.',
     )
-  } else if (avgContent > 0.3 && avgDelivery < -0.3) {
+  } else if (avgContent > 15 && avgDelivery < -15) {
     notes.push(
       'Positive words tend to arrive cold — watch for backhanded praise.',
     )
-  } else if (avgContent < -0.3 && avgDelivery < -0.3) {
-    notes.push('Negative content and harsh delivery dominate the log.')
-  } else if (avgContent > 0.3 && avgDelivery > 0.3) {
-    notes.push('Positive content and warm delivery dominate the log.')
+  } else if (avgContent < -15 && avgDelivery < -15) {
+    notes.push('Critical content and harsh delivery dominate the log.')
+  } else if (avgContent > 15 && avgDelivery > 15) {
+    notes.push('Positive content and kind delivery dominate the log.')
   }
 
   if (stats.worseRate !== null && stats.effectCount >= 2) {
@@ -87,9 +87,9 @@ export function buildPersonInsight(
     const mean = (list: Comment[]) =>
       list.reduce((sum, comment) => sum + comment.delivery, 0) / list.length
     const shift = mean(second) - mean(first)
-    if (shift > 0.5) {
+    if (shift > 15) {
       notes.push('Delivery has warmed since you started logging.')
-    } else if (shift < -0.5) {
+    } else if (shift < -15) {
       notes.push('Delivery has cooled since you started logging.')
     }
   }

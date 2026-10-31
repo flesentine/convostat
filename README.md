@@ -20,8 +20,8 @@ Together they make four quadrants:
 
 |                | Kind delivery          | Harsh delivery           |
 | -------------- | ---------------------- | ------------------------ |
-| Positive content | **Warm & supportive** | **Backhanded**           |
-| Negative content | **Honest & caring**   | **Hostile**              |
+| Positive content | **Supportive**       | **Backhanded**           |
+| Negative content | **Constructive**     | **Hostile**              |
 
 The key distinction: negative news delivered kindly is *not* the same as negative
 news delivered harshly. Convostat keeps those apart.

@@ -10,7 +10,7 @@ import {
 import { cn } from '../lib/utils'
 
 const SIZE = 240
-const OFFSET = 28
+const OFFSET = 20
 const PLOT = SIZE - OFFSET * 2
 
 interface QuadrantPadProps {
@@ -62,6 +62,28 @@ export function QuadrantPad({
     { key: 'warm' as const, x: OFFSET + half, y: OFFSET },
     { key: 'hostile' as const, x: OFFSET, y: OFFSET + half },
     { key: 'backhanded' as const, x: OFFSET + half, y: OFFSET + half },
+  ]
+
+  const cornerLabels = [
+    { key: 'honest' as const, x: OFFSET + 8, y: OFFSET + 13, anchor: 'start' as const },
+    {
+      key: 'warm' as const,
+      x: OFFSET + PLOT - 8,
+      y: OFFSET + 13,
+      anchor: 'end' as const,
+    },
+    {
+      key: 'hostile' as const,
+      x: OFFSET + 8,
+      y: OFFSET + PLOT - 9,
+      anchor: 'start' as const,
+    },
+    {
+      key: 'backhanded' as const,
+      x: OFFSET + PLOT - 8,
+      y: OFFSET + PLOT - 9,
+      anchor: 'end' as const,
+    },
   ]
 
   return (
@@ -193,38 +215,17 @@ export function QuadrantPad({
         strokeWidth={1}
       />
 
-      <text
-        x={OFFSET + 8}
-        y={OFFSET + 13}
-        textAnchor="start"
-        className="fill-[var(--muted)] text-[9.5px] font-medium uppercase tracking-[0.12em]"
-      >
-        Caring
-      </text>
-      <text
-        x={OFFSET + PLOT - 8}
-        y={OFFSET + 13}
-        textAnchor="end"
-        className="fill-[var(--muted)] text-[9.5px] font-medium uppercase tracking-[0.12em]"
-      >
-        Warm
-      </text>
-      <text
-        x={OFFSET + 8}
-        y={OFFSET + PLOT - 9}
-        textAnchor="start"
-        className="fill-[var(--muted)] text-[9.5px] font-medium uppercase tracking-[0.12em]"
-      >
-        Hostile
-      </text>
-      <text
-        x={OFFSET + PLOT - 8}
-        y={OFFSET + PLOT - 9}
-        textAnchor="end"
-        className="fill-[var(--muted)] text-[9.5px] font-medium uppercase tracking-[0.12em]"
-      >
-        Backhanded
-      </text>
+      {cornerLabels.map((label) => (
+        <text
+          key={label.key}
+          x={label.x}
+          y={label.y}
+          textAnchor={label.anchor}
+          className="fill-[var(--muted)] text-[9px] font-medium uppercase tracking-[0.1em]"
+        >
+          {QUADRANTS[label.key].short}
+        </text>
+      ))}
 
       <text
         x={SIZE / 2}

@@ -1,0 +1,70 @@
+# Convostat
+
+A local-first journal for how people talk to you.
+
+Log a comment someone made, rate **what was said** (content) and **how it was said**
+(delivery), and watch the pattern build up over time. Everything stays in your
+browser — no account, no server, no analytics.
+
+## The model
+
+Two axes, five snap points each:
+
+- **Content** — `-2` very negative → `0` neutral → `+2` very positive
+- **Delivery** — `-2` harsh → `0` flat → `+2` very kind
+
+Together they make four quadrants:
+
+|                | Kind delivery          | Harsh delivery           |
+| -------------- | ---------------------- | ------------------------ |
+| Positive content | **Warm & supportive** | **Backhanded**           |
+| Negative content | **Honest & caring**   | **Hostile**              |
+
+The key distinction: negative news delivered kindly is *not* the same as negative
+news delivered harshly. Convostat keeps those apart.
+
+Optional per-comment detail: intensity (1–5), how it landed (better / same / worse),
+and a private note.
+
+## What you get
+
+- **Log** — ten-second capture: person, optional text, topic chips, two sliders,
+  live quadrant preview, and an interactive 2D pad.
+- **People** — cards with a delivery sparkline and each person's dominant pattern.
+- **Person detail** — quadrant scatter, rolling-average trend lines, a per-topic
+  breakdown (content, delivery, skew), auto-written pattern summary, and the full
+  comment log with edit/delete.
+- **Settings** — light/dark/system theme, JSON backup and restore, CSV export,
+  topic management, sample data, and a full reset.
+
+## Stack
+
+Vite + React 19 + TypeScript, Tailwind CSS v4, Dexie (IndexedDB), React Router
+(hash routing), Zod for backup validation, Vitest for the scoring and aggregation
+logic. Installable as a PWA via `vite-plugin-pwa`.
+
+## Develop
+
+```bash
+npm install
+npm run dev          # http://localhost:3000
+npm test             # domain logic tests
+npm run build        # type-check + production build
+npm run preview      # serve the production build (PWA works here)
+npm run icons        # regenerate PWA icons from scripts/generate-icons.mjs
+```
+
+## Data & privacy
+
+All records live in IndexedDB under the `convostat` database in this browser
+profile. Nothing is uploaded. The app asks the browser for persistent storage, but
+browsers can still evict site data under pressure — **export a JSON backup from
+Settings regularly**. Import supports merge or full replace, validated with Zod.
+
+## Deploy
+
+`.github/workflows/deploy.yml` builds the app with a `/convostat/` base path and
+publishes `dist` to GitHub Pages on pushes to `main`. In the repository settings,
+set **Pages → Build and deployment → Source** to **GitHub Actions** once.
+
+Because the app uses hash routing, it works from any subpath without server rewrites.

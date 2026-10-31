@@ -31,8 +31,9 @@ and a private note.
 
 ## What you get
 
-- **Log** — ten-second capture: person, optional text, topic chips, two sliders,
-  live quadrant preview, and an interactive 2D pad.
+- **Log** — pad-first capture: pick a person, tap where the comment landed, and
+  save. Text, topics, fine sliders, and optional detail stay tucked away until
+  you need them.
 - **People** — cards with a delivery sparkline and each person's dominant pattern.
 - **Person detail** — quadrant scatter, rolling-average trend lines, a per-topic
   breakdown (content, delivery, skew), auto-written pattern summary, and the full

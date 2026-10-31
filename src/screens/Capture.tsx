@@ -6,6 +6,7 @@ import {
   ChevronDown,
   CornerDownLeft,
   Plus,
+  SlidersHorizontal,
   Sparkles,
   Users,
 } from 'lucide-react'
@@ -53,10 +54,12 @@ export function Capture() {
   const [intensity, setIntensity] = useState(3)
   const [effect, setEffect] = useState<Effect | ''>('')
   const [note, setNote] = useState('')
-  const [showDetail, setShowDetail] = useState(false)
+  const [showContext, setShowContext] = useState(false)
+  const [showSliders, setShowSliders] = useState(false)
   const [addOpen, setAddOpen] = useState(false)
   const [saved, setSaved] = useState(false)
   const savedTimer = useRef<number | undefined>(undefined)
+  const selectedChipRef = useRef<HTMLButtonElement>(null)
 
   const recentPersons = useMemo(() => {
     const byId = new Map(persons.map((person) => [person.id, person]))
@@ -103,6 +106,10 @@ export function Capture() {
     return () => window.clearTimeout(savedTimer.current)
   }, [])
 
+  useEffect(() => {
+    selectedChipRef.current?.scrollIntoView({ inline: 'center', block: 'nearest' })
+  }, [personId])
+
   const quadrant = quadrantOf(content, delivery)
   const meta = QUADRANTS[quadrant]
   const selectedPerson = persons.find((person) => person.id === personId)
@@ -119,7 +126,8 @@ export function Capture() {
       topicIds,
       content,
       delivery,
-      intensity: showDetail ? intensity : undefined,
+      intensity:
+        showContext || intensity !== 3 || effect || note.trim() ? intensity : undefined,
       effect: effect || undefined,
       note: note.trim() || undefined,
     })
@@ -160,10 +168,10 @@ export function Capture() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl">
+    <div className="mx-auto max-w-2xl">
       <PageHeading />
 
-      <Card className="p-5 sm:p-6">
+      <Card className="p-4 sm:p-6">
         <div>
           <SectionLabel>Who said it</SectionLabel>
           <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
@@ -172,6 +180,7 @@ export function Capture() {
               return (
                 <button
                   key={person.id}
+                  ref={selected ? selectedChipRef : undefined}
                   type="button"
                   onClick={() => setPersonId(person.id)}
                   className={cn(
@@ -201,30 +210,58 @@ export function Capture() {
           </div>
         </div>
 
-        <div className="mt-6">
-          <SectionLabel>What did they say?</SectionLabel>
-          <textarea
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-            onKeyDown={(event) => {
-              if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
-                event.preventDefault()
-                void submit()
-              }
-            }}
-            rows={3}
-            placeholder="Paste the gist of it — or leave this blank if you just want to rate the feeling."
-            className="w-full resize-none rounded-xl border border-line-strong bg-surface px-3.5 py-3 text-base leading-relaxed text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20 sm:text-sm"
-          />
-        </div>
-
         <div className="mt-5">
-          <SectionLabel>Topics</SectionLabel>
-          <TopicChips topics={topics} selected={topicIds} onChange={setTopicIds} />
+          <SectionLabel>How did it land?</SectionLabel>
+          <div className="mx-auto w-full max-w-[270px] sm:max-w-[320px]">
+            <QuadrantPad
+              content={content}
+              delivery={delivery}
+              onChange={(nextContent, nextDelivery) => {
+                setContent(nextContent)
+                setDelivery(nextDelivery)
+              }}
+            />
+            <div className="mt-3 text-center">
+              <p className="text-base font-semibold" style={{ color: meta.color }}>
+                {meta.label}
+              </p>
+              <p className="mt-1 text-sm font-medium tabular-nums text-muted">
+                Content {formatSigned(content, 0)} · Delivery{' '}
+                {formatSigned(delivery, 0)}
+              </p>
+              <p className="mt-1 hidden text-[11px] leading-snug text-muted sm:block">
+                {meta.description}
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-7 grid gap-7 md:grid-cols-[minmax(0,1fr)_230px]">
-          <div className="order-1 space-y-7">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setShowSliders((value) => !value)}
+            className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line-strong px-3.5 text-xs font-medium text-muted transition hover:bg-surface-2 hover:text-ink"
+            aria-expanded={showSliders}
+          >
+            <SlidersHorizontal size={14} />
+            {showSliders ? 'Hide sliders' : 'Fine-tune'}
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowContext((value) => !value)}
+            className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line-strong px-3.5 text-xs font-medium text-muted transition hover:bg-surface-2 hover:text-ink"
+            aria-expanded={showContext}
+          >
+            <ChevronDown
+              size={14}
+              className={cn('transition-transform', showContext && 'rotate-180')}
+            />
+            {showContext ? 'Hide context' : 'Add context'}
+          </button>
+        </div>
+
+        {showSliders ? (
+          <div className="mt-5 space-y-7 rounded-2xl border border-line bg-surface-2/40 p-4">
             <RatingSlider
               label="Content"
               hint="what was said"
@@ -242,49 +279,33 @@ export function Capture() {
               color="var(--delivery)"
             />
           </div>
+        ) : null}
 
-          <div className="order-2">
-            <div className="mx-auto w-full max-w-[250px] md:max-w-[230px]">
-              <QuadrantPad
-                content={content}
-                delivery={delivery}
-                onChange={(nextContent, nextDelivery) => {
-                  setContent(nextContent)
-                  setDelivery(nextDelivery)
+        {showContext ? (
+          <div className="mt-5 space-y-5 border-t border-line pt-5">
+            <div>
+              <SectionLabel>What did they say?</SectionLabel>
+              <textarea
+                value={text}
+                onChange={(event) => setText(event.target.value)}
+                onKeyDown={(event) => {
+                  if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+                    event.preventDefault()
+                    void submit()
+                  }
                 }}
+                rows={3}
+                placeholder="Paste the gist of it — or leave this blank if you just want to rate the feeling."
+                className="w-full resize-none rounded-xl border border-line-strong bg-surface px-3.5 py-3 text-base leading-relaxed text-ink outline-none transition placeholder:text-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/20 sm:text-sm"
               />
-              <div className="mt-2 text-center">
-                <p className="text-sm font-semibold" style={{ color: meta.color }}>
-                  {meta.label}
-                </p>
-                <p className="mt-0.5 text-[11px] leading-snug text-muted">
-                  {meta.description}
-                </p>
-                <p className="mt-1 text-[11px] font-medium tabular-nums text-muted">
-                  Content {formatSigned(content, 0)} · Delivery{' '}
-                  {formatSigned(delivery, 0)}
-                </p>
-              </div>
             </div>
-          </div>
-        </div>
 
-        <div className="mt-6 border-t border-line pt-4">
-          <button
-            type="button"
-            onClick={() => setShowDetail((value) => !value)}
-            className="flex min-h-10 items-center gap-1.5 py-2 text-xs font-medium text-muted transition hover:text-ink"
-            aria-expanded={showDetail}
-          >
-            <ChevronDown
-              size={14}
-              className={cn('transition-transform', showDetail && 'rotate-180')}
-            />
-            Add detail — intensity, how it landed, a private note
-          </button>
+            <div>
+              <SectionLabel>Topics</SectionLabel>
+              <TopicChips topics={topics} selected={topicIds} onChange={setTopicIds} />
+            </div>
 
-          {showDetail ? (
-            <div className="mt-4 grid gap-5 sm:grid-cols-2">
+            <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <SectionLabel>Intensity</SectionLabel>
                 <div className="flex gap-1.5">
@@ -343,24 +364,13 @@ export function Capture() {
                 />
               </label>
             </div>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
 
-        <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="hidden items-center gap-1.5 text-[11px] text-muted sm:flex">
-            <CornerDownLeft size={12} />
-            <kbd className="rounded border border-line bg-surface-2 px-1 py-0.5 font-sans text-[10px]">
-              ⌘
-            </kbd>
-            <span>+</span>
-            <kbd className="rounded border border-line bg-surface-2 px-1 py-0.5 font-sans text-[10px]">
-              Enter
-            </kbd>
-            to save
-          </p>
+        <div className="mt-5 border-t border-line pt-4">
           <Button
             variant="primary"
-            className="w-full sm:w-auto sm:min-w-40"
+            className="w-full"
             onClick={() => void submit()}
             disabled={!selectedPerson}
           >
@@ -376,14 +386,17 @@ export function Capture() {
               </>
             )}
           </Button>
+          <p className="mt-3 hidden items-center justify-center gap-1.5 text-center text-[11px] text-muted sm:flex">
+            {selectedPerson
+              ? `Adding to ${selectedPerson.name}'s log. Everything stays on this device.`
+              : 'Choose a person to log a comment.'}
+            <span className="hidden items-center gap-1 sm:inline-flex">
+              <CornerDownLeft size={11} />
+              ⌘ Enter to save
+            </span>
+          </p>
         </div>
       </Card>
-
-      <p className="mt-3 text-center text-[11px] text-muted">
-        {selectedPerson
-          ? `Adding to ${selectedPerson.name}'s log. Everything stays on this device.`
-          : 'Choose a person to log a comment.'}
-      </p>
 
       <PersonFormModal
         open={addOpen}
@@ -396,12 +409,12 @@ export function Capture() {
 
 function PageHeading() {
   return (
-    <div className="mb-6">
+    <div className="mb-5">
       <h1 className="text-2xl font-semibold tracking-[-0.02em] text-ink">
         Log a comment
       </h1>
       <p className="mt-1 text-sm text-muted">
-        Capture how it landed while it&apos;s still fresh. Ten seconds is enough.
+        Tap the pad. Add context only if you want.
       </p>
     </div>
   )

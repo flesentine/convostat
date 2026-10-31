@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, MessageSquarePlus, Pencil, Trash2 } from 'lucide-react'
+import { ArrowLeft, ChevronDown, MessageSquarePlus, Pencil, Trash2 } from 'lucide-react'
 import { db } from '../db/db'
 import type { Comment } from '../db/types'
 import {
@@ -31,7 +31,7 @@ const RANGES: Array<{ label: string; value: number | null }> = [
 const MIX_ORDER = ['warm', 'honest', 'backhanded', 'hostile', 'neutral'] as const
 
 function signTone(value: number | null): string {
-  if (value === null || Math.abs(value) < 0.05) return 'text-muted'
+  if (value === null || Math.abs(value) < 2) return 'text-muted'
   return value > 0 ? 'text-warm' : 'text-hostile'
 }
 
@@ -101,7 +101,7 @@ export function PersonDetail() {
   }
 
   const selectedComment = comments.find((comment) => comment.id === selectedId) ?? null
-  const visibleComments = showAll ? comments : comments.slice(0, 12)
+  const visibleComments = showAll ? comments : comments.slice(0, 6)
 
   const deleteComment = async (comment: Comment) => {
     if (!window.confirm('Delete this comment from the log?')) return
@@ -326,26 +326,38 @@ export function PersonDetail() {
               </Card>
 
               <Card className="flex-1">
-                <CardHeader
-                  title="Quadrant guide"
-                  subtitle="What each corner tends to feel like."
-                />
-                <ul className="space-y-2.5 px-5 pb-5">
-                  {(['warm', 'honest', 'backhanded', 'hostile'] as const).map((key) => (
-                    <li key={key}>
-                      <div className="flex items-center gap-1.5 text-xs font-medium text-ink-soft">
-                        <span
-                          className="size-2 rounded-full"
-                          style={{ background: QUADRANTS[key].color }}
-                        />
-                        {QUADRANTS[key].label}
-                      </div>
-                      <p className="mt-0.5 pl-3.5 text-[11px] leading-snug text-muted">
-                        {QUADRANTS[key].traits.slice(0, 3).join(' · ')}
+                <details className="group">
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-3 px-5 pb-4 pt-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent/50 [&::-webkit-details-marker]:hidden">
+                    <div>
+                      <h2 className="text-sm font-semibold tracking-tight text-ink">
+                        Quadrant guide
+                      </h2>
+                      <p className="mt-0.5 text-xs text-muted">
+                        What each corner tends to feel like.
                       </p>
-                    </li>
-                  ))}
-                </ul>
+                    </div>
+                    <ChevronDown
+                      size={16}
+                      className="mt-0.5 shrink-0 text-muted transition-transform group-open:rotate-180"
+                    />
+                  </summary>
+                  <ul className="space-y-2.5 px-5 pb-5">
+                    {(['warm', 'honest', 'backhanded', 'hostile'] as const).map((key) => (
+                      <li key={key}>
+                        <div className="flex items-center gap-1.5 text-xs font-medium text-ink-soft">
+                          <span
+                            className="size-2 rounded-full"
+                            style={{ background: QUADRANTS[key].color }}
+                          />
+                          {QUADRANTS[key].label}
+                        </div>
+                        <p className="mt-0.5 pl-3.5 text-[11px] leading-snug text-muted">
+                          {QUADRANTS[key].traits.slice(0, 3).join(' · ')}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
               </Card>
             </div>
           </div>
@@ -353,7 +365,7 @@ export function PersonDetail() {
           <Card className="mt-4">
             <CardHeader
               title="Over time"
-              subtitle="Rolling average of the last 5 comments. Faint dots are individual ratings."
+              subtitle="Rolling 5-comment average. Dots are individual ratings."
               action={
                 <div className="flex shrink-0 gap-3 text-[11px] text-muted">
                   <span className="flex items-center gap-1.5">
@@ -506,11 +518,6 @@ export function PersonDetail() {
                           {formatDay(comment.occurredAt)}
                         </span>
                         <QuadrantBadge quadrant={quadrant} size="sm" />
-                        {comment.effect ? (
-                          <span className="text-[11px] text-muted">
-                            {EFFECT_META[comment.effect].short}
-                          </span>
-                        ) : null}
                       </div>
                       <p className="mt-1 text-sm leading-snug text-ink">
                         {comment.text ?? (
@@ -534,6 +541,9 @@ export function PersonDetail() {
                         </div>
                       ) : null}
                       <p className="mt-1.5 text-[11px] text-muted">
+                        {comment.effect
+                          ? `${EFFECT_META[comment.effect].label} · `
+                          : ''}
                         Content {formatSigned(comment.content)} · Delivery{' '}
                         {formatSigned(comment.delivery)}
                         {comment.intensity ? ` · Intensity ${comment.intensity}` : ''}
@@ -554,7 +564,7 @@ export function PersonDetail() {
                 )
               })}
             </ul>
-            {comments.length > 12 ? (
+            {comments.length > 6 ? (
               <div className="border-t border-line px-5 py-3 text-center">
                 <button
                   type="button"
@@ -626,11 +636,6 @@ function SelectedComment({
             {formatDay(comment.occurredAt)}
           </span>
           <QuadrantBadge quadrant={quadrant} size="sm" />
-          {comment.effect ? (
-            <span className="text-[11px] text-muted">
-              {EFFECT_META[comment.effect].short}
-            </span>
-          ) : null}
         </div>
         <p className="mt-1 text-sm leading-snug text-ink">
           {comment.text ?? <span className="italic text-muted">No text recorded</span>}
@@ -648,6 +653,7 @@ function SelectedComment({
           </div>
         ) : null}
         <p className="mt-1.5 text-[11px] text-muted">
+          {comment.effect ? `${EFFECT_META[comment.effect].label} · ` : ''}
           Content {formatSigned(comment.content)} · Delivery {formatSigned(comment.delivery)}
           {comment.intensity ? ` · Intensity ${comment.intensity}` : ''}
         </p>

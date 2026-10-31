@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import {
   Database,
@@ -12,6 +12,7 @@ import {
   Sun,
   Trash2,
   Upload,
+  X,
 } from 'lucide-react'
 import { db } from '../db/db'
 import {
@@ -53,6 +54,12 @@ export function Settings() {
   const fileRef = useRef<HTMLInputElement>(null)
 
   const report = (tone: Status['tone'], text: string) => setStatus({ tone, text })
+
+  useEffect(() => {
+    if (!status) return
+    const timer = window.setTimeout(() => setStatus(null), 4500)
+    return () => window.clearTimeout(timer)
+  }, [status])
 
   const handleExportJson = async () => {
     const count = await exportBackupJson()
@@ -133,14 +140,22 @@ export function Settings() {
       {status ? (
         <div
           className={cn(
-            'mb-4 rounded-xl border px-3.5 py-2.5 text-xs',
+            'fixed inset-x-4 bottom-[calc(5.25rem+env(safe-area-inset-bottom))] z-40 mx-auto flex max-w-md items-start gap-2 rounded-xl border px-4 py-3 text-xs shadow-lg sm:bottom-6',
             status.tone === 'ok'
-              ? 'border-warm/30 bg-warm/10 text-ink-soft'
-              : 'border-hostile/30 bg-hostile/10 text-hostile',
+              ? 'border-warm/40 bg-surface text-ink-soft'
+              : 'border-hostile/40 bg-surface text-hostile',
           )}
           role="status"
         >
-          {status.text}
+          <p className="flex-1 leading-relaxed">{status.text}</p>
+          <button
+            type="button"
+            onClick={() => setStatus(null)}
+            className="-m-1.5 flex size-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-surface-2 hover:text-ink"
+            aria-label="Dismiss message"
+          >
+            <X size={14} />
+          </button>
         </div>
       ) : null}
 
@@ -226,7 +241,12 @@ export function Settings() {
               <Download size={14} />
               Load sample data
             </Button>
-            <Button variant="danger" size="sm" onClick={() => void handleClear()}>
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={() => void handleClear()}
+              disabled={persons === 0 && comments.length === 0 && topics.length === 0}
+            >
               <Trash2 size={14} />
               Clear all data
             </Button>
@@ -267,7 +287,7 @@ export function Settings() {
             <Button variant="secondary" onClick={() => void runImport('merge')}>
               Merge
             </Button>
-            <Button variant="primary" onClick={() => void runImport('replace')}>
+            <Button variant="danger" onClick={() => void runImport('replace')}>
               Replace everything
             </Button>
           </>

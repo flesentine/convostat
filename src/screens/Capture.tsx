@@ -11,6 +11,7 @@ import {
   Users,
 } from 'lucide-react'
 import { db } from '../db/db'
+import { seedSampleData } from '../db/sample'
 import type { Effect, Person } from '../db/types'
 import {
   CONTENT_LABELS,
@@ -146,16 +147,22 @@ export function Capture() {
   if (persons.length === 0) {
     return (
       <div className="mx-auto max-w-2xl">
-        <PageHeading />
+        <PageHeading subtitle="Add one person to start. You can add the rest later." />
         <EmptyState
           icon={<Users size={28} />}
           title="Add someone to start logging"
           body="Convostat tracks how a person's comments land with you — what they said, how they said it, and how it left you feeling."
           action={
-            <Button variant="primary" onClick={() => setAddOpen(true)}>
-              <Plus size={16} />
-              Add someone
-            </Button>
+            <div className="flex flex-col items-center gap-2 sm:flex-row">
+              <Button variant="primary" onClick={() => setAddOpen(true)}>
+                <Plus size={16} />
+                Add someone
+              </Button>
+              <Button variant="ghost" onClick={() => void seedSampleData()}>
+                <Sparkles size={14} />
+                Try sample data
+              </Button>
+            </div>
           }
         />
         <PersonFormModal
@@ -412,15 +419,17 @@ export function Capture() {
   )
 }
 
-function PageHeading() {
+function PageHeading({
+  subtitle = 'Tap the pad. Add context only if you want.',
+}: {
+  subtitle?: string
+}) {
   return (
     <div className="mb-4">
       <h1 className="text-2xl font-semibold tracking-[-0.02em] text-ink">
         Log a comment
       </h1>
-      <p className="mt-1 text-sm text-muted">
-        Tap the pad. Add context only if you want.
-      </p>
+      <p className="mt-1 text-sm text-muted">{subtitle}</p>
     </div>
   )
 }

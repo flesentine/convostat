@@ -145,7 +145,7 @@ export function PersonFormModal({
                 aria-label={`Use color ${option}`}
                 aria-pressed={color === option}
                 className={cn(
-                  'size-9 rounded-full border-2 transition sm:size-7',
+                  'size-10 rounded-full border-2 transition sm:size-7',
                   color === option ? 'border-ink' : 'border-transparent',
                 )}
                 style={{ background: option }}

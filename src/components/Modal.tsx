@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 import { cn } from '../lib/utils'
@@ -13,6 +13,9 @@ interface ModalProps {
   width?: string
 }
 
+const FOCUSABLE =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
 export function Modal({
   open,
   onClose,
@@ -22,19 +25,64 @@ export function Modal({
   footer,
   width = 'max-w-md',
 }: ModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const onCloseRef = useRef(onClose)
+
+  useEffect(() => {
+    onCloseRef.current = onClose
+  }, [onClose])
+
   useEffect(() => {
     if (!open) return
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', onKey)
-    const previous = document.body.style.overflow
+    const dialog = dialogRef.current
+    const previous = document.activeElement as HTMLElement | null
+    const bodyOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = previous
+
+    const focusables = () =>
+      dialog
+        ? Array.from(dialog.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
+            (element) => element.offsetParent !== null,
+          )
+        : []
+
+    const frame = window.requestAnimationFrame(() => {
+      if (!dialog || dialog.contains(document.activeElement)) return
+      const first = focusables()[0]
+      ;(first ?? dialog)?.focus()
+    })
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onCloseRef.current()
+        return
+      }
+      if (event.key !== 'Tab' || !dialog) return
+      const nodes = focusables()
+      if (nodes.length === 0) {
+        event.preventDefault()
+        dialog.focus()
+        return
+      }
+      const first = nodes[0]
+      const last = nodes[nodes.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
     }
-  }, [open, onClose])
+
+    document.addEventListener('keydown', onKey)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = bodyOverflow
+      previous?.focus()
+    }
+  }, [open])
 
   if (!open) return null
 
@@ -47,11 +95,13 @@ export function Modal({
         onClick={onClose}
       />
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={title}
+        tabIndex={-1}
         className={cn(
-          'relative z-10 w-full rounded-t-3xl border border-line bg-surface p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-2xl sm:pb-5',
+          'relative z-10 w-full rounded-t-3xl border border-line bg-surface p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-2xl outline-none sm:rounded-2xl sm:pb-5',
           'max-h-[min(90dvh,46rem)] overflow-y-auto overscroll-contain',
           width,
         )}

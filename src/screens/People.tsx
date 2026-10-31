@@ -63,10 +63,12 @@ export function People() {
             {thisWeek} this week
           </p>
         </div>
-        <Button variant="primary" onClick={() => setAddOpen(true)}>
-          <Plus size={16} />
-          Add person
-        </Button>
+        {persons.length > 0 ? (
+          <Button variant="primary" onClick={() => setAddOpen(true)}>
+            <Plus size={16} />
+            Add person
+          </Button>
+        ) : null}
       </div>
 
       {persons.length > 0 ? (
@@ -149,9 +151,15 @@ function PersonCard({
                 {RELATIONSHIP_LABELS[person.relationship]}
               </p>
             </div>
-            {stats.dominant ? (
-              <QuadrantBadge quadrant={stats.dominant} size="sm" />
-            ) : null}
+            <div className="flex shrink-0 items-center gap-2">
+              {stats.dominant ? (
+                <QuadrantBadge quadrant={stats.dominant} size="sm" />
+              ) : null}
+              <ArrowRight
+                size={14}
+                className="text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent"
+              />
+            </div>
           </div>
 
           <div className="mt-3 flex items-end justify-between gap-3">
@@ -166,14 +174,6 @@ function PersonCard({
             <Sparkline comments={comments} color={person.color} />
           </div>
         </div>
-      </div>
-
-      <div className="mt-3 flex items-center justify-end gap-1 text-[11px] font-medium text-muted transition group-hover:text-accent">
-        View pattern
-        <ArrowRight
-          size={13}
-          className="transition-transform group-hover:translate-x-0.5"
-        />
       </div>
     </Link>
   )

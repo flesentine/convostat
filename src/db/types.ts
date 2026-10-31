@@ -35,9 +35,9 @@ export interface Comment {
   /** Optional gist of what was said. */
   text?: string
   topicIds: string[]
-  /** -2 (very negative) .. +2 (very positive) */
+  /** -100 (very negative) .. +100 (very positive) */
   content: number
-  /** -2 (harsh) .. +2 (very kind) */
+  /** -100 (harsh) .. +100 (very kind) */
   delivery: number
   /** Optional 1..5 */
   intensity?: number

@@ -1,4 +1,10 @@
-import { QUADRANTS, quadrantOf } from '../domain/scoring'
+import {
+  QUADRANTS,
+  SCORE_MAX,
+  SCORE_MIN,
+  SCORE_SPAN,
+  quadrantOf,
+} from '../domain/scoring'
 import type { Comment } from '../db/types'
 import { jitter } from '../lib/utils'
 
@@ -14,8 +20,10 @@ interface ScatterPlotProps {
 }
 
 export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps) {
-  const xFor = (content: number) => PAD + ((content + 2) / 4) * PLOT
-  const yFor = (delivery: number) => PAD + ((2 - delivery) / 4) * PLOT
+  const xFor = (content: number) =>
+    PAD + ((content - SCORE_MIN) / SCORE_SPAN) * PLOT
+  const yFor = (delivery: number) =>
+    PAD + ((SCORE_MAX - delivery) / SCORE_SPAN) * PLOT
 
   const quadrants = [
     { key: 'honest' as const, x: PAD, y: PAD },
@@ -88,7 +96,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         Backhanded
       </text>
 
-      {[-1, 0, 1].map((tick) => (
+      {[-50, 0, 50].map((tick) => (
         <g key={tick}>
           <line
             x1={xFor(tick)}

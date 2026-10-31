@@ -1,6 +1,12 @@
 import Dexie, { type Table } from 'dexie'
 import type { Comment, Person, Topic } from './types'
 
+const LEGACY_SCORE_SCALE = 50
+
+function scaleLegacyScore(value: number): number {
+  return Math.max(-100, Math.min(100, Math.round(value * LEGACY_SCORE_SCALE)))
+}
+
 class ConvostatDB extends Dexie {
   persons!: Table<Person, string>
   comments!: Table<Comment, string>
@@ -13,6 +19,22 @@ class ConvostatDB extends Dexie {
       comments: 'id, personId, occurredAt, *topicIds',
       topics: 'id, name, createdAt',
     })
+    // v2 widens both axes from -2..2 to -100..100.
+    this.version(2)
+      .stores({
+        persons: 'id, name, createdAt',
+        comments: 'id, personId, occurredAt, *topicIds',
+        topics: 'id, name, createdAt',
+      })
+      .upgrade((tx) =>
+        tx
+          .table<Comment, string>('comments')
+          .toCollection()
+          .modify((comment) => {
+            comment.content = scaleLegacyScore(comment.content)
+            comment.delivery = scaleLegacyScore(comment.delivery)
+          }),
+      )
   }
 }
 

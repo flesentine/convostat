@@ -1,10 +1,11 @@
 import { formatDayShort } from '../lib/utils'
 import type { Comment } from '../db/types'
+import { SCORE_MAX, SCORE_MIN, SCORE_SPAN } from '../domain/scoring'
 import { rollingSeries } from '../domain/stats'
 
 const WIDTH = 720
 const HEIGHT = 250
-const PAD_LEFT = 38
+const PAD_LEFT = 56
 const PAD_RIGHT = 16
 const PAD_TOP = 16
 const PAD_BOTTOM = 28
@@ -36,7 +37,8 @@ export function TrendChart({ comments }: TrendChartProps) {
   const plotHeight = HEIGHT - PAD_TOP - PAD_BOTTOM
 
   const xFor = (at: number) => PAD_LEFT + ((at - minAt) / (maxAt - minAt)) * plotWidth
-  const yFor = (value: number) => PAD_TOP + ((2 - value) / 4) * plotHeight
+  const yFor = (value: number) =>
+    PAD_TOP + ((SCORE_MAX - value) / SCORE_SPAN) * plotHeight
 
   const linePath = (key: 'content' | 'delivery') =>
     series
@@ -50,7 +52,7 @@ export function TrendChart({ comments }: TrendChartProps) {
       role="img"
       aria-label="Average content and delivery over time"
     >
-      {[-2, -1, 0, 1, 2].map((tick) => (
+      {[SCORE_MIN, SCORE_MIN / 2, 0, SCORE_MAX / 2, SCORE_MAX].map((tick) => (
         <g key={tick}>
           <line
             x1={PAD_LEFT}

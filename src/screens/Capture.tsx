@@ -15,6 +15,7 @@ import {
   CONTENT_LABELS,
   DELIVERY_LABELS,
   QUADRANTS,
+  formatSigned,
   quadrantOf,
 } from '../domain/scoring'
 import { cn, uid } from '../lib/utils'
@@ -258,6 +259,10 @@ export function Capture() {
                 </p>
                 <p className="mt-0.5 text-[11px] leading-snug text-muted">
                   {meta.description}
+                </p>
+                <p className="mt-1 text-[11px] font-medium tabular-nums text-muted">
+                  Content {formatSigned(content, 0)} · Delivery{' '}
+                  {formatSigned(delivery, 0)}
                 </p>
               </div>
             </div>

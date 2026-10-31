@@ -8,10 +8,13 @@ browser — no account, no server, no analytics.
 
 ## The model
 
-Two axes, five snap points each:
+Two axes, each with 201 snap points:
 
-- **Content** — `-2` very negative → `0` neutral → `+2` very positive
-- **Delivery** — `-2` harsh → `0` flat → `+2` very kind
+- **Content** — `-100` very negative → `0` neutral → `+100` very positive
+- **Delivery** — `-100` harsh → `0` flat → `+100` very kind
+
+The slider and the 2D pad both use the full range. Hold **Shift** while using the
+pad's arrow keys for steps of 10.
 
 Together they make four quadrants:
 

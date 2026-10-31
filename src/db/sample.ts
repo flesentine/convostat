@@ -157,13 +157,13 @@ function magnitude(random: () => number, min: number, max: number): number {
 function scoresFor(quadrant: Quadrant, random: () => number): { content: number; delivery: number } {
   switch (quadrant) {
     case 'warm':
-      return { content: magnitude(random, 1, 2), delivery: magnitude(random, 1, 2) }
+      return { content: magnitude(random, 20, 90), delivery: magnitude(random, 20, 90) }
     case 'honest':
-      return { content: -magnitude(random, 1, 2), delivery: magnitude(random, 1, 2) }
+      return { content: -magnitude(random, 20, 90), delivery: magnitude(random, 20, 90) }
     case 'hostile':
-      return { content: -magnitude(random, 1, 2), delivery: -magnitude(random, 1, 2) }
+      return { content: -magnitude(random, 20, 90), delivery: -magnitude(random, 20, 90) }
     case 'backhanded':
-      return { content: magnitude(random, 1, 2), delivery: -magnitude(random, 1, 2) }
+      return { content: magnitude(random, 20, 90), delivery: -magnitude(random, 20, 90) }
     case 'neutral':
       return { content: 0, delivery: 0 }
   }
@@ -255,7 +255,7 @@ export async function seedSampleData(): Promise<void> {
           1,
           Math.min(
             5,
-            Math.round((Math.abs(scores.content) + Math.abs(scores.delivery)) / 4 * 3) +
+            Math.round((Math.abs(scores.content) + Math.abs(scores.delivery)) / 200 * 3) +
               1 +
               (random() < 0.3 ? 1 : 0),
           ),

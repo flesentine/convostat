@@ -30,8 +30,8 @@ const commentSchema = z.object({
   createdAt: z.number(),
   text: z.string().optional(),
   topicIds: z.array(z.string()),
-  content: z.number().int().min(-2).max(2),
-  delivery: z.number().int().min(-2).max(2),
+  content: z.number().int().min(-100).max(100),
+  delivery: z.number().int().min(-100).max(100),
   intensity: z.number().int().min(1).max(5).optional(),
   effect: effectSchema.optional(),
   note: z.string().optional(),
@@ -57,6 +57,8 @@ export function parseBackup(text: string): BackupData {
   const parsed = backupSchema.parse(JSON.parse(text))
   const personIds = new Set(parsed.persons.map((person) => person.id))
   const topicIds = new Set(parsed.topics.map((topic) => topic.id))
+  // Backups from v1 used the old -2..2 scale.
+  const scale = parsed.version < 2 ? 50 : 1
   return {
     persons: parsed.persons,
     topics: parsed.topics,
@@ -64,6 +66,8 @@ export function parseBackup(text: string): BackupData {
       .filter((comment) => personIds.has(comment.personId))
       .map((comment) => ({
         ...comment,
+        content: Math.max(-100, Math.min(100, Math.round(comment.content * scale))),
+        delivery: Math.max(-100, Math.min(100, Math.round(comment.delivery * scale))),
         topicIds: comment.topicIds.filter((topicId) => topicIds.has(topicId)),
       })),
   }
@@ -77,7 +81,7 @@ export async function exportBackupJson(): Promise<number> {
   ])
   const payload = {
     app: 'convostat',
-    version: 1,
+    version: 2,
     exportedAt: Date.now(),
     persons,
     topics,

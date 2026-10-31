@@ -1,4 +1,5 @@
 import type { Comment } from '../db/types'
+import { SCORE_MAX, SCORE_SPAN } from '../domain/scoring'
 
 interface SparklineProps {
   comments: Comment[]
@@ -35,7 +36,8 @@ export function Sparkline({
   const pad = 4
   const xFor = (index: number) =>
     pad + (sorted.length === 1 ? (width - pad * 2) / 2 : (index / (sorted.length - 1)) * (width - pad * 2))
-  const yFor = (value: number) => pad + ((2 - value) / 4) * (height - pad * 2)
+  const yFor = (value: number) =>
+    pad + ((SCORE_MAX - value) / SCORE_SPAN) * (height - pad * 2)
 
   const points = sorted
     .map((comment, index) => `${xFor(index)},${yFor(comment.delivery)}`)

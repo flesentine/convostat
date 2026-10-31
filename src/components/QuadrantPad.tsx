@@ -1,5 +1,12 @@
 import { useRef, useState } from 'react'
-import { QUADRANTS, clamp, quadrantOf } from '../domain/scoring'
+import {
+  QUADRANTS,
+  SCORE_MAX,
+  SCORE_MIN,
+  SCORE_SPAN,
+  clamp,
+  quadrantOf,
+} from '../domain/scoring'
 import { cn } from '../lib/utils'
 
 const SIZE = 240
@@ -34,8 +41,8 @@ export function QuadrantPad({
     const nx = clamp((vbX - OFFSET) / PLOT, 0, 1)
     const ny = clamp((vbY - OFFSET) / PLOT, 0, 1)
     return {
-      content: Math.round(nx * 4) - 2,
-      delivery: 2 - Math.round(ny * 4),
+      content: Math.round(nx * SCORE_SPAN) + SCORE_MIN,
+      delivery: SCORE_MAX - Math.round(ny * SCORE_SPAN),
     }
   }
 
@@ -46,8 +53,8 @@ export function QuadrantPad({
     onChange(next.content, next.delivery)
   }
 
-  const dotX = OFFSET + ((content + 2) / 4) * PLOT
-  const dotY = OFFSET + ((2 - delivery) / 4) * PLOT
+  const dotX = OFFSET + ((content - SCORE_MIN) / SCORE_SPAN) * PLOT
+  const dotY = OFFSET + ((SCORE_MAX - delivery) / SCORE_SPAN) * PLOT
 
   const half = PLOT / 2
   const quadRects = [
@@ -69,7 +76,7 @@ export function QuadrantPad({
       role={interactive ? 'application' : 'img'}
       aria-label={
         interactive
-          ? 'Rating pad. Drag or use arrow keys to set content and delivery.'
+          ? `Rating pad. Content ${content}, delivery ${delivery}. Drag or use arrow keys; hold shift for steps of 10.`
           : `${QUADRANTS[quadrant].label}: content ${content}, delivery ${delivery}`
       }
       tabIndex={interactive ? 0 : undefined}
@@ -83,11 +90,18 @@ export function QuadrantPad({
                 ArrowDown: [0, -1],
               }
               const delta = map[event.key]
-              if (!delta) return
+              if (!delta) {
+                if (event.key === '0' || event.key === 'Home') {
+                  event.preventDefault()
+                  onChange?.(0, 0)
+                }
+                return
+              }
               event.preventDefault()
+              const step = event.shiftKey ? 10 : 1
               onChange?.(
-                clamp(content + delta[0], -2, 2),
-                clamp(delivery + delta[1], -2, 2),
+                clamp(content + delta[0] * step, SCORE_MIN, SCORE_MAX),
+                clamp(delivery + delta[1] * step, SCORE_MIN, SCORE_MAX),
               )
             }
           : undefined

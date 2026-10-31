@@ -1,7 +1,9 @@
 import type { Comment, Quadrant } from '../db/types'
 
-export const CONTENT_VALUES = [-2, -1, 0, 1, 2] as const
-export const DELIVERY_VALUES = [-2, -1, 0, 1, 2] as const
+/** Both rating axes run from -100 to +100, with 0 as neutral. */
+export const SCORE_MIN = -100
+export const SCORE_MAX = 100
+export const SCORE_SPAN = SCORE_MAX - SCORE_MIN
 
 export const CONTENT_LABELS = [
   'Very negative',
@@ -84,11 +86,28 @@ export function commentQuadrant(comment: Pick<Comment, 'content' | 'delivery'>):
 }
 
 export function contentLabel(value: number): string {
-  return CONTENT_LABELS[clamp(value, -2, 2) + 2]
+  return scoreLabel(value, CONTENT_LABELS)
 }
 
 export function deliveryLabel(value: number): string {
-  return DELIVERY_LABELS[clamp(value, -2, 2) + 2]
+  return scoreLabel(value, DELIVERY_LABELS)
+}
+
+/**
+ * Five descriptive anchors spread across the -100..100 range. The numeric
+ * value keeps its full resolution; the label is just a human hint.
+ */
+export function scoreLabel(value: number, labels: readonly string[]): string {
+  return labels[labelIndex(value)]
+}
+
+export function labelIndex(value: number): number {
+  const score = clamp(value, SCORE_MIN, SCORE_MAX)
+  if (score <= -60) return 0
+  if (score <= -10) return 1
+  if (score < 10) return 2
+  if (score < 60) return 3
+  return 4
 }
 
 export function clamp(value: number, min: number, max: number): number {
@@ -97,8 +116,9 @@ export function clamp(value: number, min: number, max: number): number {
 
 export function formatSigned(value: number | null, digits = 1): string {
   if (value === null || Number.isNaN(value)) return '—'
-  const rounded = value.toFixed(digits)
-  return value > 0 ? `+${rounded}` : rounded
+  const rounded = Number(value.toFixed(digits))
+  const text = Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(digits)
+  return rounded > 0 ? `+${text}` : text
 }
 
 export function formatPercent(value: number | null): string {

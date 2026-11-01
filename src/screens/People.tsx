@@ -1,13 +1,14 @@
 import { useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Plus, Search, Users } from 'lucide-react'
+import { ArrowRight, ContactRound, Plus, Search, Users } from 'lucide-react'
 import { db } from '../db/db'
 import type { Comment, Person } from '../db/types'
 import { personStats } from '../domain/stats'
 import { RELATIONSHIP_LABELS } from '../domain/scoring'
 import { relativeDay } from '../lib/utils'
 import { Button } from '../components/Button'
+import { ContactImportModal } from '../components/ContactImportModal'
 import { EmptyState, QuadrantBadge } from '../components/Primitives'
 import { PersonFormModal } from '../components/PersonFormModal'
 import { Sparkline } from '../components/Sparkline'
@@ -17,6 +18,7 @@ export function People() {
   const comments = useLiveQuery(() => db.comments.toArray(), [], [])
   const [query, setQuery] = useState('')
   const [addOpen, setAddOpen] = useState(false)
+  const [importOpen, setImportOpen] = useState(false)
 
   const byPerson = useMemo(() => {
     const map = new Map<string, Comment[]>()
@@ -64,10 +66,16 @@ export function People() {
           </p>
         </div>
         {persons.length > 0 ? (
-          <Button variant="primary" onClick={() => setAddOpen(true)}>
-            <Plus size={16} />
-            Add person
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="secondary" onClick={() => setImportOpen(true)}>
+              <ContactRound size={16} />
+              Import contacts
+            </Button>
+            <Button variant="primary" onClick={() => setAddOpen(true)}>
+              <Plus size={16} />
+              Add person
+            </Button>
+          </div>
         ) : null}
       </div>
 
@@ -92,10 +100,16 @@ export function People() {
           title="No one here yet"
           body="Add the people whose comments you want to track. You can start with one."
           action={
-            <Button variant="primary" onClick={() => setAddOpen(true)}>
-              <Plus size={16} />
-              Add someone
-            </Button>
+            <div className="flex flex-col items-center gap-2">
+              <Button variant="primary" onClick={() => setAddOpen(true)}>
+                <Plus size={16} />
+                Add someone
+              </Button>
+              <Button variant="ghost" onClick={() => setImportOpen(true)}>
+                <ContactRound size={15} />
+                Import contacts
+              </Button>
+            </div>
           }
         />
       ) : rows.length === 0 ? (
@@ -118,6 +132,7 @@ export function People() {
       )}
 
       <PersonFormModal open={addOpen} onClose={() => setAddOpen(false)} />
+      <ContactImportModal open={importOpen} onClose={() => setImportOpen(false)} />
     </div>
   )
 }

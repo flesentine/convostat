@@ -35,6 +35,7 @@ and a private note.
   save. Text, topics, fine sliders, and optional detail stay tucked away until
   you need them, with the selected person's recent trend underneath.
 - **People** — cards with a delivery sparkline and each person's dominant pattern.
+  Import names from the Android contact picker, a `.vcf` file, or pasted text.
 - **Person detail** — quadrant scatter, rolling-average trend lines, a per-topic
   breakdown (content, delivery, skew), auto-written pattern summary, and the full
   comment log with edit/delete.
@@ -71,6 +72,8 @@ All records live in IndexedDB under the `convostat` database in this browser
 profile. Nothing is uploaded. The app asks the browser for persistent storage, but
 browsers can still evict site data under pressure — **export a JSON backup from
 Settings regularly**. Import supports merge or full replace, validated with Zod.
+Contact import reads display names only; phone numbers and email addresses are
+ignored and never stored.
 
 ## Deploy
 

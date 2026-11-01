@@ -333,7 +333,7 @@ export function PersonDetail() {
                         Quadrant guide
                       </h2>
                       <p className="mt-0.5 text-xs text-muted">
-                        What each corner tends to feel like.
+                        How content and delivery combine.
                       </p>
                     </div>
                     <ChevronDown
@@ -351,7 +351,10 @@ export function PersonDetail() {
                           />
                           {QUADRANTS[key].label}
                         </div>
-                        <p className="mt-0.5 pl-3.5 text-xs leading-snug text-muted">
+                        <p className="mt-0.5 pl-3.5 text-xs leading-snug text-ink-soft">
+                          {QUADRANTS[key].description}
+                        </p>
+                        <p className="mt-0.5 pl-3.5 text-2xs leading-snug text-muted">
                           {QUADRANTS[key].traits.slice(0, 3).join(' · ')}
                         </p>
                       </li>

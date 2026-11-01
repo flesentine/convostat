@@ -143,7 +143,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         transform={`rotate(-90 11 ${SIZE / 2})`}
         className="fill-[var(--muted)] text-[9px] tracking-[0.16em]"
       >
-        NEGATIVE
+        CRITICAL
       </text>
       <text
         x={SIZE - 11}
@@ -152,7 +152,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
         transform={`rotate(90 ${SIZE - 11} ${SIZE / 2})`}
         className="fill-[var(--muted)] text-[9px] tracking-[0.16em]"
       >
-        POSITIVE
+        AFFIRMING
       </text>
 
       {comments.map((comment) => {

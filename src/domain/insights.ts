@@ -40,7 +40,7 @@ export function buildPersonInsight(
   } else if (avgDelivery <= -25) {
     headline = 'Consistently harsh delivery.'
   } else if (avgContent >= 25) {
-    headline = 'Mostly positive content.'
+    headline = 'Mostly affirming content.'
   } else {
     headline = 'Mixed signals so far.'
   }
@@ -53,12 +53,12 @@ export function buildPersonInsight(
     )
   } else if (avgContent > 15 && avgDelivery < -15) {
     notes.push(
-      'Positive words tend to arrive cold — watch for backhanded praise.',
+      'Affirming words tend to arrive cold — watch for backhanded praise.',
     )
   } else if (avgContent < -15 && avgDelivery < -15) {
     notes.push('Critical content and harsh delivery dominate the log.')
   } else if (avgContent > 15 && avgDelivery > 15) {
-    notes.push('Positive content and kind delivery dominate the log.')
+    notes.push('Affirming content and kind delivery dominate the log.')
   }
 
   if (stats.worseRate !== null && stats.effectCount >= 2) {

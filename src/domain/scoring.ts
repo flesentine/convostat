@@ -6,11 +6,11 @@ export const SCORE_MAX = 100
 export const SCORE_SPAN = SCORE_MAX - SCORE_MIN
 
 export const CONTENT_LABELS = [
-  'Very negative',
-  'Negative',
+  'Very critical',
+  'Critical',
   'Neutral',
-  'Positive',
-  'Very positive',
+  'Affirming',
+  'Very affirming',
 ]
 
 export const DELIVERY_LABELS = [
@@ -35,7 +35,7 @@ export const QUADRANTS: Record<Quadrant, QuadrantMeta> = {
     key: 'warm',
     label: 'Supportive',
     short: 'Supportive',
-    description: 'Positive message, kind delivery',
+    description: 'Affirming message, kind delivery',
     traits: ['encouraging', 'appreciative', 'affectionate', 'celebratory', 'reassuring'],
     color: 'var(--warm)',
   },
@@ -59,7 +59,7 @@ export const QUADRANTS: Record<Quadrant, QuadrantMeta> = {
     key: 'backhanded',
     label: 'Backhanded',
     short: 'Backhanded',
-    description: 'Positive words, cold delivery',
+    description: 'Affirming words, cold delivery',
     traits: ['sarcastic', 'condescending', 'performative', 'faint praise', 'negging'],
     color: 'var(--backhanded)',
   },

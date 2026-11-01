@@ -250,7 +250,7 @@ export function QuadrantPad({
         transform={`rotate(-90 10 ${SIZE / 2})`}
         className="fill-[var(--muted)] text-[8px] tracking-[0.16em]"
       >
-        NEGATIVE
+        CRITICAL
       </text>
       <text
         x={SIZE - 10}
@@ -259,7 +259,7 @@ export function QuadrantPad({
         transform={`rotate(90 ${SIZE - 10} ${SIZE / 2})`}
         className="fill-[var(--muted)] text-[8px] tracking-[0.16em]"
       >
-        POSITIVE
+        AFFIRMING
       </text>
 
       <circle

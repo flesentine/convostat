@@ -8,38 +8,34 @@ import {
 } from './scoring'
 
 describe('quadrantOf', () => {
-  it('maps positive content and kind delivery to warm', () => {
+  it('maps affirming content and kind delivery to warm', () => {
     expect(quadrantOf(1, 1)).toBe('warm')
     expect(quadrantOf(2, 2)).toBe('warm')
+    expect(quadrantOf(100, 100)).toBe('warm')
   })
 
-  it('maps negative content and kind delivery to honest', () => {
+  it('maps critical content and kind delivery to honest', () => {
     expect(quadrantOf(-1, 1)).toBe('honest')
     expect(quadrantOf(-2, 2)).toBe('honest')
+    expect(quadrantOf(-100, 100)).toBe('honest')
   })
 
-  it('maps negative content and harsh delivery to hostile', () => {
+  it('maps critical content and harsh delivery to hostile', () => {
     expect(quadrantOf(-1, -1)).toBe('hostile')
     expect(quadrantOf(-2, -2)).toBe('hostile')
+    expect(quadrantOf(-100, -100)).toBe('hostile')
   })
 
-  it('maps positive content and harsh delivery to backhanded', () => {
+  it('maps affirming content and harsh delivery to backhanded', () => {
     expect(quadrantOf(1, -1)).toBe('backhanded')
     expect(quadrantOf(2, -2)).toBe('backhanded')
+    expect(quadrantOf(100, -100)).toBe('backhanded')
   })
 
   it('treats a zero axis as neutral', () => {
     expect(quadrantOf(0, 2)).toBe('neutral')
     expect(quadrantOf(2, 0)).toBe('neutral')
     expect(quadrantOf(0, 0)).toBe('neutral')
-  })
-
-  it('maps the full range onto the same quadrants', () => {
-    expect(quadrantOf(100, 100)).toBe('warm')
-    expect(quadrantOf(-100, 100)).toBe('honest')
-    expect(quadrantOf(-100, -100)).toBe('hostile')
-    expect(quadrantOf(100, -100)).toBe('backhanded')
-    expect(quadrantOf(0, 100)).toBe('neutral')
   })
 })
 
@@ -51,11 +47,11 @@ describe('commentQuadrant', () => {
 
 describe('labels', () => {
   it('describes scores across the full range', () => {
-    expect(contentLabel(-100)).toBe('Very negative')
-    expect(contentLabel(-30)).toBe('Negative')
+    expect(contentLabel(-100)).toBe('Very critical')
+    expect(contentLabel(-30)).toBe('Critical')
     expect(contentLabel(0)).toBe('Neutral')
-    expect(contentLabel(30)).toBe('Positive')
-    expect(contentLabel(100)).toBe('Very positive')
+    expect(contentLabel(30)).toBe('Affirming')
+    expect(contentLabel(100)).toBe('Very affirming')
     expect(deliveryLabel(-100)).toBe('Harsh')
     expect(deliveryLabel(-30)).toBe('Cold')
     expect(deliveryLabel(0)).toBe('Flat')

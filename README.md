@@ -10,7 +10,7 @@ browser — no account, no server, no analytics.
 
 Two axes, each with 201 snap points:
 
-- **Content** — `-100` very negative → `0` neutral → `+100` very positive
+- **Content** — `-100` very critical → `0` neutral → `+100` very affirming
 - **Delivery** — `-100` harsh → `0` flat → `+100` very kind
 
 The slider and the 2D pad both use the full range. Hold **Shift** while using the
@@ -20,10 +20,10 @@ Together they make four quadrants:
 
 |                | Kind delivery          | Harsh delivery           |
 | -------------- | ---------------------- | ------------------------ |
-| Positive content | **Supportive**       | **Backhanded**           |
-| Negative content | **Constructive**     | **Hostile**              |
+| Affirming content | **Supportive**      | **Backhanded**           |
+| Critical content  | **Constructive**    | **Hostile**              |
 
-The key distinction: negative news delivered kindly is *not* the same as negative
+The key distinction: critical news delivered kindly is *not* the same as critical
 news delivered harshly. Convostat keeps those apart.
 
 Optional per-comment detail: intensity (1–5), how it landed (better / same / worse),

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
+  ArrowRight,
   Check,
   ChevronDown,
   CornerDownLeft,
@@ -12,7 +13,7 @@ import {
 } from 'lucide-react'
 import { db } from '../db/db'
 import { seedSampleData } from '../db/sample'
-import type { Effect, Person } from '../db/types'
+import type { Comment, Effect, Person } from '../db/types'
 import {
   CONTENT_LABELS,
   DELIVERY_LABELS,
@@ -28,6 +29,7 @@ import { PersonFormModal } from '../components/PersonFormModal'
 import { QuadrantPad } from '../components/QuadrantPad'
 import { RatingSlider } from '../components/RatingSlider'
 import { TopicChips } from '../components/TopicChips'
+import { TrendChart } from '../components/TrendChart'
 
 const EFFECT_OPTIONS: Array<{ value: Effect; label: string; className: string }> = [
   { value: 'worse', label: 'Worse', className: 'border-hostile/40 text-hostile' },
@@ -61,6 +63,15 @@ export function Capture() {
   const [saved, setSaved] = useState(false)
   const savedTimer = useRef<number | undefined>(undefined)
   const selectedChipRef = useRef<HTMLButtonElement>(null)
+
+  const personComments = useLiveQuery<Comment[], Comment[]>(
+    async () =>
+      personId
+        ? await db.comments.where('personId').equals(personId).toArray()
+        : [],
+    [personId],
+    [],
+  )
 
   const recentPersons = useMemo(() => {
     const byId = new Map(persons.map((person) => [person.id, person]))
@@ -114,6 +125,14 @@ export function Capture() {
   const quadrant = quadrantOf(content, delivery)
   const meta = QUADRANTS[quadrant]
   const selectedPerson = persons.find((person) => person.id === personId)
+  const trendComments = useMemo(
+    () =>
+      personComments
+        .filter((comment) => comment.personId === personId)
+        .sort((a, b) => a.occurredAt - b.occurredAt)
+        .slice(-12),
+    [personComments, personId],
+  )
 
   const submit = async () => {
     if (!personId) return
@@ -175,10 +194,11 @@ export function Capture() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto max-w-2xl xl:max-w-5xl">
       <PageHeading />
 
-      <Card className="p-4 sm:p-6">
+      <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_360px] xl:items-start xl:gap-6">
+        <Card className="p-4 sm:p-6">
         <div>
           <SectionLabel>Who said it</SectionLabel>
           <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
@@ -409,6 +429,43 @@ export function Capture() {
           </p>
         </div>
       </Card>
+
+      {selectedPerson && trendComments.length >= 2 ? (
+        <Card className="mt-4 p-4 sm:p-5 xl:sticky xl:top-6 xl:mt-0">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h2 className="text-sm font-semibold tracking-tight text-ink">
+                Recent trend
+              </h2>
+              <p className="mt-0.5 text-xs text-muted">
+                {selectedPerson.name} · last {trendComments.length} comments
+              </p>
+            </div>
+            <Link
+              to={`/people/${selectedPerson.id}`}
+              className="inline-flex min-h-10 shrink-0 items-center gap-1 text-xs font-medium text-accent hover:underline"
+            >
+              Full detail
+              <ArrowRight size={13} />
+            </Link>
+          </div>
+          <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-muted">
+            <span className="flex items-center gap-1.5">
+              <span className="size-2 rounded-full bg-[var(--content)]" />
+              Content
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="size-2 rounded-full bg-[var(--delivery)]" />
+              Delivery
+            </span>
+            <span className="ml-auto text-[10px]">5-comment average</span>
+          </div>
+          <div className="mt-1">
+            <TrendChart comments={trendComments} />
+          </div>
+        </Card>
+      ) : null}
+      </div>
 
       <PersonFormModal
         open={addOpen}

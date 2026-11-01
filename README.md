@@ -33,7 +33,7 @@ and a private note.
 
 - **Log** — pad-first capture: pick a person, tap where the comment landed, and
   save. Text, topics, fine sliders, and optional detail stay tucked away until
-  you need them.
+  you need them, with the selected person's recent trend underneath.
 - **People** — cards with a delivery sparkline and each person's dominant pattern.
 - **Person detail** — quadrant scatter, rolling-average trend lines, a per-topic
   breakdown (content, delivery, skew), auto-written pattern summary, and the full

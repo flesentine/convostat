@@ -188,7 +188,7 @@ export function Settings() {
         </div>
       </Card>
 
-      <Card className="mt-4">
+      <Card className="mt-6">
         <CardHeader
           title="Your data"
           subtitle={`${persons} ${persons === 1 ? 'person' : 'people'} · ${
@@ -230,7 +230,7 @@ export function Settings() {
               <Database size={14} />
               Backups matter
             </p>
-            <p className="mt-1 text-[11px] leading-relaxed text-muted">
+            <p className="mt-1 max-w-[65ch] text-sm leading-relaxed text-muted">
               Browsers can clear local storage when space runs low. Export a JSON backup
               now and then — it is the only copy of this log.
             </p>
@@ -256,9 +256,9 @@ export function Settings() {
 
       <TopicManager topics={topics} comments={comments} onStatus={report} />
 
-      <Card className="mt-4">
+      <Card className="mt-6">
         <CardHeader title="About" subtitle="Convostat 0.1.0" />
-        <div className="space-y-2 px-5 pb-5 text-xs leading-relaxed text-muted">
+        <div className="max-w-[65ch] space-y-2 px-5 pb-5 text-body leading-relaxed text-muted">
           <p>
             A local-first journal for how people talk to you. Rate what was said
             (content) and how it was said (delivery), then watch the pattern.
@@ -388,7 +388,7 @@ function TopicManager({
   }
 
   return (
-    <Card className="mt-4">
+    <Card className="mt-6">
       <CardHeader
         title="Topics"
         subtitle="Rename or remove subjects. Removing a topic leaves the comments intact."
@@ -425,18 +425,18 @@ function TopicManager({
                   <button
                     type="button"
                     onClick={() => startEdit(topic)}
-                    className="min-h-10 min-w-0 flex-1 truncate text-left text-[13px] font-medium text-ink"
+                    className="min-h-10 min-w-0 flex-1 truncate text-left text-sm font-medium text-ink"
                   >
                     {topic.name}
                   </button>
                 )}
-                <span className="text-[11px] tabular-nums text-muted">
+                <span className="text-xs tabular-nums text-muted">
                   {counts.get(topic.id) ?? 0}
                 </span>
                 <button
                   type="button"
                   onClick={() => startEdit(topic)}
-                  className="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-surface-2 hover:text-ink sm:size-8"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-surface-2 hover:text-ink"
                   aria-label={`Rename ${topic.name}`}
                 >
                   <Pencil size={15} />
@@ -444,7 +444,7 @@ function TopicManager({
                 <button
                   type="button"
                   onClick={() => void remove(topic)}
-                  className="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-hostile/10 hover:text-hostile sm:size-8"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-hostile/10 hover:text-hostile"
                   aria-label={`Delete ${topic.name}`}
                 >
                   <Trash2 size={15} />

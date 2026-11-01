@@ -34,7 +34,7 @@ export default function App() {
                 end={item.end}
                 className={({ isActive }) =>
                   cn(
-                    'flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[13px] font-medium transition',
+                    'flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition',
                     isActive
                       ? 'bg-accent-soft text-accent'
                       : 'text-ink-soft hover:bg-surface-2 hover:text-ink',
@@ -49,8 +49,8 @@ export default function App() {
         </nav>
 
         <div className="mt-auto rounded-xl border border-line bg-surface/60 px-3.5 py-3">
-          <p className="text-[11px] font-medium text-ink-soft">Local-first</p>
-          <p className="mt-1 text-[11px] leading-relaxed text-muted">
+          <p className="text-xs font-medium text-ink-soft">Local-first</p>
+          <p className="mt-1 text-xs leading-relaxed text-muted">
             Your log lives in this browser. Export a backup from Settings now and then.
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function App() {
       <header className="sticky top-0 z-20 border-b border-line bg-bg/85 pt-[env(safe-area-inset-top)] backdrop-blur md:hidden">
         <div className="flex h-12 items-center justify-between px-4">
           <Logo compact />
-          <span className="text-[11px] text-muted">Local-first</span>
+          <span className="text-xs text-muted">Local-first</span>
         </div>
       </header>
 
@@ -86,7 +86,7 @@ export default function App() {
                 end={item.end}
                 className={({ isActive }) =>
                   cn(
-                    'flex flex-col items-center gap-1 py-3 text-[11px] font-medium transition',
+                    'flex flex-col items-center gap-1 py-3 text-xs font-medium transition',
                     isActive ? 'text-accent' : 'text-muted hover:text-ink',
                   )
                 }

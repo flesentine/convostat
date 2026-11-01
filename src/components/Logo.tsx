@@ -11,7 +11,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
       </span>
       <span
         className={cn(
-          'text-[15px] font-semibold tracking-[-0.02em] text-ink',
+          'text-[0.9375rem] font-semibold tracking-[-0.02em] text-ink',
           compact && 'text-sm',
         )}
       >

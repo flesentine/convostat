@@ -31,7 +31,7 @@ export function CardHeader({
   return (
     <div className="flex items-start justify-between gap-3 px-5 pt-4 pb-3">
       <div>
-        <h2 className="text-sm font-semibold tracking-tight text-ink">{title}</h2>
+        <h2 className="text-[0.9375rem] font-semibold tracking-tight text-ink">{title}</h2>
         {subtitle ? <p className="mt-0.5 text-xs text-muted">{subtitle}</p> : null}
       </div>
       {action}

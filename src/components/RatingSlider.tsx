@@ -37,10 +37,10 @@ export function RatingSlider({
     <div>
       <div className="flex items-baseline justify-between gap-2">
         <div className="flex items-baseline gap-2">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+          <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
             {label}
           </span>
-          {hint ? <span className="text-xs text-muted sm:text-[11px]">{hint}</span> : null}
+          {hint ? <span className="text-xs text-muted sm:text-xs">{hint}</span> : null}
         </div>
         <span className="flex items-baseline gap-1.5">
           <span className="text-sm font-semibold" style={{ color }}>
@@ -70,7 +70,7 @@ export function RatingSlider({
           <span
             key={entry}
             className={cn(
-              'text-center text-[11px] leading-tight sm:text-[10px]',
+              'text-center text-xs leading-tight sm:text-2xs',
               index === activeLabel ? 'font-semibold text-ink' : 'text-muted',
             )}
           >

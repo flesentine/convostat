@@ -47,6 +47,13 @@ Vite + React 19 + TypeScript, Tailwind CSS v4, Dexie (IndexedDB), React Router
 (hash routing), Zod for backup validation, Vitest for the scoring and aggregation
 logic. Installable as a PWA via `vite-plugin-pwa`.
 
+## Design
+
+A compact, readable UI scale: Inter with 16px reading text, 14px interface
+text, 12px metadata, a 4/8px spacing rhythm, and a limited warm neutral palette.
+Text meets WCAG AA contrast in both themes; chart lines use solid/dashed styles so
+meaning never depends on color alone. Touch targets stay at 40px or larger.
+
 ## Develop
 
 ```bash

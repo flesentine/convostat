@@ -142,8 +142,8 @@ export function PersonDetail() {
         </Button>
       </div>
 
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex gap-0.5 rounded-xl border border-line bg-surface p-0.5">
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex gap-0.5 self-start rounded-xl border border-line bg-surface p-0.5">
           {RANGES.map((option) => (
             <button
               key={option.label}
@@ -162,7 +162,7 @@ export function PersonDetail() {
         </div>
         <Link
           to={`/?person=${person.id}`}
-          className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-accent px-3.5 text-[13px] font-medium text-accent-ink transition hover:brightness-105"
+          className="inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-xl bg-accent px-3.5 text-sm font-medium text-accent-ink transition hover:brightness-105 sm:w-auto"
         >
           <MessageSquarePlus size={14} />
           Log a comment
@@ -220,7 +220,7 @@ export function PersonDetail() {
       ) : (
         <>
           <Card className="mt-4 p-5">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
               Pattern
             </p>
             <p className="mt-1 text-lg font-semibold tracking-[-0.01em] text-ink">
@@ -229,7 +229,7 @@ export function PersonDetail() {
             {insight.notes.length > 0 ? (
               <ul className="mt-2.5 space-y-1.5">
                 {insight.notes.map((note) => (
-                  <li key={note} className="flex gap-2 text-sm leading-snug text-ink-soft">
+                  <li key={note} className="flex max-w-[65ch] gap-2 text-body leading-relaxed text-ink-soft">
                     <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-accent/60" />
                     {note}
                   </li>
@@ -266,7 +266,7 @@ export function PersonDetail() {
                       {MIX_ORDER.filter((key) => key !== 'neutral').map((key) => (
                         <span
                           key={key}
-                          className="flex items-center gap-1.5 text-[11px] text-muted"
+                          className="flex items-center gap-1.5 text-xs text-muted"
                         >
                           <span
                             className="size-2 rounded-full"
@@ -276,7 +276,7 @@ export function PersonDetail() {
                         </span>
                       ))}
                     </div>
-                    <p className="mt-2 text-[11px] text-muted">
+                    <p className="mt-2 text-xs text-muted">
                       Tap a dot to read the comment behind it.
                     </p>
                   </div>
@@ -306,7 +306,7 @@ export function PersonDetail() {
                             />
                             {QUADRANTS[key].label}
                           </span>
-                          <span className="text-[11px] tabular-nums text-muted">
+                          <span className="text-xs tabular-nums text-muted">
                             {count} · {Math.round(percent)}%
                           </span>
                         </div>
@@ -351,7 +351,7 @@ export function PersonDetail() {
                           />
                           {QUADRANTS[key].label}
                         </div>
-                        <p className="mt-0.5 pl-3.5 text-[11px] leading-snug text-muted">
+                        <p className="mt-0.5 pl-3.5 text-xs leading-snug text-muted">
                           {QUADRANTS[key].traits.slice(0, 3).join(' · ')}
                         </p>
                       </li>
@@ -362,18 +362,18 @@ export function PersonDetail() {
             </div>
           </div>
 
-          <Card className="mt-4">
+          <Card className="mt-5">
             <CardHeader
               title="Over time"
               subtitle="Rolling 5-comment average. Dots are individual ratings."
               action={
-                <div className="flex shrink-0 gap-3 text-[11px] text-muted">
+                <div className="flex shrink-0 gap-3 text-xs text-muted">
                   <span className="flex items-center gap-1.5">
-                    <span className="size-2 rounded-full bg-[var(--content)]" />
+                    <span className="h-0.5 w-3 rounded-full bg-[var(--content)]" />
                     Content
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <span className="size-2 rounded-full bg-[var(--delivery)]" />
+                    <span className="w-3 border-t-2 border-dashed border-[var(--delivery)]" />
                     Delivery
                   </span>
                 </div>
@@ -384,7 +384,7 @@ export function PersonDetail() {
             </div>
           </Card>
 
-          <Card className="mt-4">
+          <Card className="mt-5">
             <CardHeader
               title="Topics"
               subtitle="How conversation subjects tend to land."
@@ -421,7 +421,7 @@ export function PersonDetail() {
                             {formatSigned(row.avgDelivery)}
                           </span>
                         </p>
-                        <p className="mt-0.5 text-[11px] text-muted">
+                        <p className="mt-0.5 text-xs text-muted">
                           Last {relativeDay(row.lastAt)}
                         </p>
                       </div>
@@ -431,7 +431,7 @@ export function PersonDetail() {
 
                 <div className="hidden overflow-x-auto sm:block">
                   <table className="w-full min-w-[520px] text-left text-xs">
-                    <thead className="border-y border-line text-[10px] uppercase tracking-[0.12em] text-muted">
+                    <thead className="border-y border-line text-2xs uppercase tracking-[0.12em] text-muted">
                       <tr>
                         <th className="px-5 py-2 font-semibold">Topic</th>
                         <th className="px-3 py-2 font-semibold">Comments</th>
@@ -482,7 +482,7 @@ export function PersonDetail() {
                               <span className="text-muted">—</span>
                             )}
                           </td>
-                          <td className="px-5 py-2.5 text-right text-[11px] text-muted">
+                          <td className="px-5 py-2.5 text-right text-xs text-muted">
                             {relativeDay(row.lastAt)}
                           </td>
                         </tr>
@@ -494,7 +494,7 @@ export function PersonDetail() {
             )}
           </Card>
 
-          <Card className="mt-4">
+          <Card className="mt-5">
             <CardHeader
               title="Comment log"
               subtitle={`${comments.length} ${
@@ -513,13 +513,13 @@ export function PersonDetail() {
                     />
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[11px] text-muted">
+                        <span className="text-xs text-muted">
                           {relativeDay(comment.occurredAt)} ·{' '}
                           {formatDay(comment.occurredAt)}
                         </span>
                         <QuadrantBadge quadrant={quadrant} size="sm" />
                       </div>
-                      <p className="mt-1 text-sm leading-snug text-ink">
+                      <p className="mt-1 max-w-[65ch] text-body leading-relaxed text-ink">
                         {comment.text ?? (
                           <span className="italic text-muted">No text recorded</span>
                         )}
@@ -532,7 +532,7 @@ export function PersonDetail() {
                             return (
                               <span
                                 key={topicId}
-                                className="rounded bg-surface-2 px-1.5 py-0.5 text-[10px] text-muted"
+                                className="rounded bg-surface-2 px-1.5 py-0.5 text-2xs text-muted"
                               >
                                 {topic.name}
                               </span>
@@ -540,7 +540,7 @@ export function PersonDetail() {
                           })}
                         </div>
                       ) : null}
-                      <p className="mt-1.5 text-[11px] text-muted">
+                      <p className="mt-1.5 text-xs text-muted">
                         {comment.effect
                           ? `${EFFECT_META[comment.effect].label} · `
                           : ''}
@@ -549,7 +549,7 @@ export function PersonDetail() {
                         {comment.intensity ? ` · Intensity ${comment.intensity}` : ''}
                       </p>
                       {comment.note ? (
-                        <p className="mt-1 text-xs italic text-muted">{comment.note}</p>
+                        <p className="mt-1 max-w-[65ch] text-xs italic text-muted">{comment.note}</p>
                       ) : null}
                     </div>
                     <button
@@ -602,7 +602,7 @@ function Stat({
 }) {
   return (
     <Card className="px-4 py-3">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
+      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">
         {label}
       </p>
       <p
@@ -613,7 +613,7 @@ function Stat({
       >
         {value}
       </p>
-      {hint ? <p className="text-[11px] text-muted">{hint}</p> : null}
+      {hint ? <p className="text-xs text-muted">{hint}</p> : null}
     </Card>
   )
 }
@@ -632,12 +632,12 @@ function SelectedComment({
     <div className="flex items-start justify-between gap-3">
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-[11px] text-muted">
+          <span className="text-xs text-muted">
             {formatDay(comment.occurredAt)}
           </span>
           <QuadrantBadge quadrant={quadrant} size="sm" />
         </div>
-        <p className="mt-1 text-sm leading-snug text-ink">
+        <p className="mt-1 max-w-[65ch] text-body leading-relaxed text-ink">
           {comment.text ?? <span className="italic text-muted">No text recorded</span>}
         </p>
         {topicNames.length > 0 ? (
@@ -645,14 +645,14 @@ function SelectedComment({
             {topicNames.map((name) => (
               <span
                 key={name}
-                className="rounded bg-surface-2 px-1.5 py-0.5 text-[10px] text-muted"
+                className="rounded bg-surface-2 px-1.5 py-0.5 text-2xs text-muted"
               >
                 {name}
               </span>
             ))}
           </div>
         ) : null}
-        <p className="mt-1.5 text-[11px] text-muted">
+        <p className="mt-1.5 text-xs text-muted">
           {comment.effect ? `${EFFECT_META[comment.effect].label} · ` : ''}
           Content {formatSigned(comment.content)} · Delivery {formatSigned(comment.delivery)}
           {comment.intensity ? ` · Intensity ${comment.intensity}` : ''}

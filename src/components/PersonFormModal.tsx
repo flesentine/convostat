@@ -94,7 +94,7 @@ export function PersonFormModal({
     >
       <div className="space-y-5">
         <label className="block">
-          <span className="mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+          <span className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.14em] text-muted">
             Name
           </span>
           <input
@@ -110,7 +110,7 @@ export function PersonFormModal({
         </label>
 
         <div>
-          <span className="mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+          <span className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.14em] text-muted">
             Relationship
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -133,7 +133,7 @@ export function PersonFormModal({
         </div>
 
         <div>
-          <span className="mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+          <span className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.14em] text-muted">
             Color
           </span>
           <div className="flex flex-wrap gap-2">
@@ -145,7 +145,7 @@ export function PersonFormModal({
                 aria-label={`Use color ${option}`}
                 aria-pressed={color === option}
                 className={cn(
-                  'size-10 rounded-full border-2 transition sm:size-7',
+                  'size-10 rounded-full border-2 transition',
                   color === option ? 'border-ink' : 'border-transparent',
                 )}
                 style={{ background: option }}

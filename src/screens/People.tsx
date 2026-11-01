@@ -146,8 +146,8 @@ function PersonCard({
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-ink">{person.name}</p>
-              <p className="text-[11px] text-muted">
+              <p className="truncate text-[0.9375rem] font-semibold text-ink">{person.name}</p>
+              <p className="text-xs text-muted">
                 {RELATIONSHIP_LABELS[person.relationship]}
               </p>
             </div>
@@ -164,10 +164,10 @@ function PersonCard({
 
           <div className="mt-3 flex items-end justify-between gap-3">
             <div>
-              <p className="text-[11px] text-muted">
+              <p className="text-xs text-muted">
                 {stats.count} {stats.count === 1 ? 'comment' : 'comments'}
               </p>
-              <p className="mt-0.5 text-[11px] text-muted">
+              <p className="mt-0.5 text-xs text-muted">
                 {stats.lastAt ? `Last ${relativeDay(stats.lastAt)}` : 'Nothing logged yet'}
               </p>
             </div>

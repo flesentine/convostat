@@ -68,6 +68,10 @@
   --color-content: var(--content);
   --color-delivery: var(--delivery);
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-body: 1rem;
+  --text-body--line-height: 1.5rem;
 }
 
 @layer base {
@@ -90,12 +94,18 @@
     color: var(--ink);
     font-family: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
     font-feature-settings: 'cv11', 'ss01';
+    font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
     background: color-mix(in srgb, var(--accent) 26%, transparent);
+  }
+
+  :where(a, button, summary, [tabindex]:not([tabindex='-1'])):focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+    outline-offset: 2px;
   }
 }
 

@@ -91,7 +91,7 @@ export function ScatterPlot({ comments, selectedId, onSelect }: ScatterPlotProps
           x={label.x}
           y={label.y}
           textAnchor={label.anchor}
-          className="fill-[var(--muted)] text-[10px] font-medium uppercase tracking-[0.12em]"
+          className="fill-[var(--muted)] text-2xs font-medium uppercase tracking-[0.12em]"
         >
           {QUADRANTS[label.key].short}
         </text>

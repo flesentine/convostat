@@ -211,7 +211,7 @@ export function Capture() {
                   type="button"
                   onClick={() => setPersonId(person.id)}
                   className={cn(
-                    'inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-[13px] font-medium transition',
+                    'inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-sm font-medium transition',
                     selected
                       ? 'border-accent bg-accent-soft text-accent'
                       : 'border-line-strong text-ink-soft hover:bg-surface-2',
@@ -229,7 +229,7 @@ export function Capture() {
             <button
               type="button"
               onClick={() => setAddOpen(true)}
-              className="inline-flex min-h-10 shrink-0 items-center gap-1 rounded-full border border-dashed border-line-strong px-3.5 py-2 text-[13px] font-medium text-muted transition hover:border-accent/50 hover:text-accent"
+              className="inline-flex min-h-10 shrink-0 items-center gap-1 rounded-full border border-dashed border-line-strong px-3.5 py-2 text-sm font-medium text-muted transition hover:border-accent/50 hover:text-accent"
             >
               <Plus size={13} />
               Add
@@ -261,7 +261,7 @@ export function Capture() {
                 Content {formatSigned(content, 0)} · Delivery{' '}
                 {formatSigned(delivery, 0)}
               </p>
-              <p className="mt-0.5 text-[10px] leading-tight text-muted">
+              <p className="mt-0.5 text-2xs leading-tight text-muted">
                 {meta.description}
               </p>
             </div>
@@ -418,7 +418,7 @@ export function Capture() {
               </>
             )}
           </Button>
-          <p className="mt-3 hidden items-center justify-center gap-1.5 text-center text-[11px] text-muted sm:flex">
+          <p className="mt-3 hidden items-center justify-center gap-1.5 text-center text-xs text-muted sm:flex">
             {selectedPerson
               ? `Adding to ${selectedPerson.name}'s log. Everything stays on this device.`
               : 'Choose a person to log a comment.'}
@@ -431,7 +431,7 @@ export function Capture() {
       </Card>
 
       {selectedPerson && trendComments.length >= 2 ? (
-        <Card className="mt-4 p-4 sm:p-5 xl:sticky xl:top-6 xl:mt-0">
+        <Card className="mt-5 p-4 sm:p-5 xl:sticky xl:top-6 xl:mt-0">
           <div className="flex items-start justify-between gap-3">
             <div>
               <h2 className="text-sm font-semibold tracking-tight text-ink">
@@ -449,16 +449,16 @@ export function Capture() {
               <ArrowRight size={13} />
             </Link>
           </div>
-          <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-muted">
+          <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted">
             <span className="flex items-center gap-1.5">
-              <span className="size-2 rounded-full bg-[var(--content)]" />
+              <span className="h-0.5 w-3 rounded-full bg-[var(--content)]" />
               Content
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="size-2 rounded-full bg-[var(--delivery)]" />
+              <span className="w-3 border-t-2 border-dashed border-[var(--delivery)]" />
               Delivery
             </span>
-            <span className="ml-auto text-[10px]">5-comment average</span>
+            <span className="ml-auto text-2xs">5-comment average</span>
           </div>
           <div className="mt-1">
             <TrendChart comments={trendComments} />
@@ -493,7 +493,7 @@ function PageHeading({
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+    <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-muted">
       {children}
     </span>
   )

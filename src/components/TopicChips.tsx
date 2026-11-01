@@ -73,7 +73,7 @@ export function TopicChips({ topics, selected, onChange }: TopicChipsProps) {
         {selectedTopics.map((topic) => (
           <span
             key={topic.id}
-            className="inline-flex min-h-9 items-center gap-1.5 rounded-lg bg-surface-2 py-1 pl-2.5 pr-1 text-[13px] font-medium text-ink"
+            className="inline-flex min-h-9 items-center gap-1.5 rounded-lg bg-surface-2 py-1 pl-2.5 pr-1 text-sm font-medium text-ink"
           >
             <span
               aria-hidden
